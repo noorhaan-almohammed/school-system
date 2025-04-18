@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Subject_performance;
+use App\Models\SubjectPerformance;
 use Illuminate\Http\Request;
 
 class SubjectPerformanceController extends Controller
@@ -26,7 +26,7 @@ class SubjectPerformanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Subject_performance $subject_performance)
+    public function show(SubjectPerformance $subjectPerformance)
     {
         //
     }
@@ -34,7 +34,7 @@ class SubjectPerformanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Subject_performance $subject_performance)
+    public function update(Request $request, SubjectPerformance $subjectPerformance)
     {
         //
     }
@@ -42,7 +42,7 @@ class SubjectPerformanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Subject_performance $subject_performance)
+    public function destroy(SubjectPerformance $subjectPerformance)
     {
         //
     }
