@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class SubjectPerformance extends Model
 {
     protected $fillable = [
         'student_id',
         'teaching_assignment_id',
-        'status',
-        'date'
+        'grad',
+        'comment'
     ];
-    public function students(){
-        return $this->hasMany(User::class, 'student_id');
+    public function student(){
+        return $this->belongsTo(User::class, 'student_id');
     }
+
 }

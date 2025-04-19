@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\overall_performance;
+use App\Models\OverallPerformances;
 use Illuminate\Http\Request;
 
-class OverallPerformanceController extends Controller
+class OverallPerformancesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -26,7 +26,7 @@ class OverallPerformanceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(overall_performance $overall_performance)
+    public function show(OverallPerformances $overallPerformances)
     {
         //
     }
@@ -34,7 +34,7 @@ class OverallPerformanceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, overall_performance $overall_performance)
+    public function update(Request $request, OverallPerformances $overallPerformances)
     {
         //
     }
@@ -42,7 +42,7 @@ class OverallPerformanceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(overall_performance $overall_performance)
+    public function destroy(OverallPerformances $overallPerformances)
     {
         //
     }
