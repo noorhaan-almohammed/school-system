@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, ValidatesRequests;
 
     /**
      * Return a successful JSON response.
@@ -76,4 +75,5 @@ class Controller extends BaseController
             ],
         ], $status);
     }
+    use AuthorizesRequests, ValidatesRequests;
 }
