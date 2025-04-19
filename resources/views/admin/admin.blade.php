@@ -10,12 +10,13 @@
 </head>
 
 <body>
+    
     <div class="dashboard">
         <!-- الشريط الجانبي -->
-        @include('admin.sidebar');
+        @include('admin.sidebar')
         <!-- المحتوى الرئيسي -->
         <main class="main-content">
-            
+
             @include('admin.header')
             <!-- محتوى الصفحات -->
             @include('admin.contenet')

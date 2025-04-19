@@ -1,7 +1,73 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>نظام المدرسة</title>
+    @vite(['resources/css/login.css'])
+</head>
+<body>
 
-@section('content')
-<div class="container">
+
+    <div class="login-container">
+        <div class="lable">
+            <h1>أهلا و سهلا بك في نظام المدرسة</h1>
+        </div>
+        <div class="login-row">
+            <div class="login-col">
+                <div class="login-card">
+                    <div class="login-card-header">{{ 'تسجيل الدخول' }}</div>
+
+                    <div class="login-card-body">
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
+
+                            <div class="login-form-group">
+                                <label for="email" class="login-label">{{ "البريد الالكتروني" }}</label>
+
+                                <div class="login-input-group">
+                                    <input id="email" type="email" class="login-input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                    @error('email')
+                                        <span class="login-error" role="alert">
+                                            <strong>{{ 'كلمة المرور أو الايميل غير صحيحين' }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="login-form-group">
+                                <label for="password" class="login-label">{{ __('كلمة المرور') }}</label>
+
+                                <div class="login-input-group">
+                                    <input id="password" type="password" class="login-input @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                    @error('password')
+                                        <span class="login-error" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="login-form-actions">
+                                <div class="login-actions">
+                                    <button type="submit" class="login-btn">
+                                        {{ __('تأكيد') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+{{-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -69,5 +135,4 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
+</div> --}}
