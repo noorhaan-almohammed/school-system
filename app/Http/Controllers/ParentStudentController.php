@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\parent_student;
+use App\Models\ParentStudent;
 use Illuminate\Http\Request;
 
 class ParentStudentController extends Controller
@@ -26,7 +26,7 @@ class ParentStudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(parent_student $parent_student)
+    public function show(ParentStudent $parentStudent)
     {
         //
     }
@@ -34,7 +34,7 @@ class ParentStudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, parent_student $parent_student)
+    public function update(Request $request, ParentStudent $parentStudent)
     {
         //
     }
@@ -42,7 +42,7 @@ class ParentStudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(parent_student $parent_student)
+    public function destroy(ParentStudent $parentStudent)
     {
         //
     }
