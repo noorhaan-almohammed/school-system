@@ -16,11 +16,11 @@ class RoleSeeder extends Seeder
     {
         //
          // Admin Role
-         $admin = Role::create(['name' => 'admin', 'guard_name' => 'api']);
+         $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'api']);
          $admin->syncPermissions(Permission::all());
 
          //Teacher Role
-         $teacher = Role::create(['name' => 'teacher', 'guard_name' => 'api']);
+         $teacher = Role::firstOrCreate(['name' => 'teacher', 'guard_name' => 'api']);
          $teacherPermissions = [
              'view assigned classes',
              'manage attendance',
@@ -32,7 +32,7 @@ class RoleSeeder extends Seeder
          $teacher->syncPermissions($teacherPermissions);
 
          //Parent Role
-         $parent = Role::create(['name' => 'parent', 'guard_name' => 'api']);
+         $parent = Role::firstOrCreate(['name' => 'parent', 'guard_name' => 'api']);
          $parentPermissions = [
             'view student performance',
             'view student attendance',
@@ -42,7 +42,7 @@ class RoleSeeder extends Seeder
          $parent->syncPermissions($parentPermissions);
 
          //Student Role
-         $student = Role::create(['name' => 'student', 'guard_name' => 'api']);
+         $student = Role::firstOrCreate(['name' => 'student', 'guard_name' => 'api']);
          $studentPermissions = [
             'view own performance',
             'view own attendance',
