@@ -12,7 +12,7 @@ class RegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,10 +23,45 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'=>'required|string|max:255',
-            'email'=>'required|email|unique:users,email|max:255',
-            'password'=>['required','string','confirmed',new StrongPassword()],
-            'phone_number'=>'required|string|min:8|max:100'
+            // 'password'=>['required','string','confirmed',new StrongPassword()],
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string',
+            'phone_number' => 'nullable|string|min:8|max:100|unique:users,phone_number',
+            'role' => 'required|string|in:teacher,parent,student',
         ];
     }
+
+    /**
+     * Define human-readable attribute names for validation errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'name' => 'الاسم',
+            'email' => 'الايميل',
+            'password' => 'كلمة المرور',
+            'phone_number' => 'رقم الهاتف',
+        ];
+    }
+
+    /**
+     * Define custom error messages for validation failures.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'required' => ':attribute هو حقل مطلوب.',
+            'max' => ':attribute يجب ألا يتجاوز :max محرف.',
+            'min' => ':attribute على الأقل :min محرف.',
+            'unique' => ':attribute يجب أن يكون فريد.',
+            'string' => ':attribute يجب أن يكون حقل نصي.',
+            'email' => ':attribute يجب أن يكون بريد الكتروني'
+        ];
+    }
+
 }

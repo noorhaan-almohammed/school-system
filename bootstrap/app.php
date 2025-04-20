@@ -12,7 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // $middleware->group('web', [
+        // \App\Http\Middleware\SetGuard::class,
+        // ]);
+
+        // $middleware->group('api', [
+        // \App\Http\Middleware\SetGuard::class,
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

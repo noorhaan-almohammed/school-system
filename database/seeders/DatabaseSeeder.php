@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
             'password' => '123456789',
             'phone_number' => "09351454778"
         ]);
+        $this->call([
+            PermissionSeeder::class,
+            RoleSeeder::class,
+        ]);
     }
 }
