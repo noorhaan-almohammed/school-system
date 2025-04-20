@@ -11,6 +11,7 @@
                 <tr>
                     <th>رقم الموظف</th>
                     <th>اسم المدرس</th>
+                    <th>البريد الالكتروني</th>
                     <th>المادة</th>
                     <th>الصف</th>
                     <th>رقم الهاتف</th>
@@ -28,9 +29,10 @@
                 @endphp
 
                 @foreach ($teachers as $teacher)
-                    <tr>
+                    <tr data-modal="teacher" data-id="{{ $teacher->id }}">
                         <td>{{ 'T' . str_pad($teacher->id, 4, '0', STR_PAD_LEFT) }}</td>
                         <td>{{ $teacher->name }}</td>
+                        <td>{{ $teacher->email }}</td>
                         <td>
                             @foreach ($teacher->teachingAssignments as $assignment)
                                 <div>{{ $assignment->subject->name ?? '—' }}</div>
@@ -43,7 +45,7 @@
                         </td>
                         <td>{{ $teacher->phone_number ?? '—' }}</td>
                         <td>
-                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn view-btn"><i class="fas fa-plus"></i></button>
                             <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                             <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
                         </td>
