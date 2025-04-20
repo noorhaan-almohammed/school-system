@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\RegisterRequest;
+use App\Models\User;
 use App\Services\Auth\RegisterService;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class UserController extends Controller
 {

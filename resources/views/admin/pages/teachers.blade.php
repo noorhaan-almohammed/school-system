@@ -10,29 +10,45 @@
             <thead>
                 <tr>
                     <th>رقم الموظف</th>
-                    <th>الصورة</th>
                     <th>اسم المدرس</th>
                     <th>المادة</th>
+                    <th>الصف</th>
                     <th>رقم الهاتف</th>
-                    <th>الحالة</th>
+                    {{-- <th>الحالة</th> --}}
                     <th>الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>T1001</td>
-                    <td><img src="https://via.placeholder.com/40" alt="صورة المدرس" class="user-avatar">
-                    </td>
-                    <td>خالد عبدالله</td>
-                    <td>الرياضيات</td>
-                    <td>0555123456</td>
-                    <td><span class="status-badge active">نشط</span></td>
-                    <td>
-                        <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
+                @php
+                    use App\Models\User;
+
+                    $teachers = User::role('teacher')
+                        ->with(['teachingAssignments.subject', 'teachingAssignments.classroom'])
+                        ->get();
+                @endphp
+
+                @foreach ($teachers as $teacher)
+                    <tr>
+                        <td>{{ 'T' . str_pad($teacher->id, 4, '0', STR_PAD_LEFT) }}</td>
+                        <td>{{ $teacher->name }}</td>
+                        <td>
+                            @foreach ($teacher->teachingAssignments as $assignment)
+                                <div>{{ $assignment->subject->name ?? '—' }}</div>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($teacher->teachingAssignments as $assignment)
+                                <div>{{ $assignment->classroom->name ?? '—' }}</div>
+                            @endforeach
+                        </td>
+                        <td>{{ $teacher->phone_number ?? '—' }}</td>
+                        <td>
+                            <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 
