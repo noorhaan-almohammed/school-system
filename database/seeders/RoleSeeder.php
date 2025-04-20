@@ -16,11 +16,18 @@ class RoleSeeder extends Seeder
     {
         //
          // Admin Role
-         $admin = Role::create(['name' => 'admin', 'guard_name' => 'api']);
-         $admin->syncPermissions(Permission::all());
+         $webAdminPermissions = Permission::where('guard_name', 'web')->get();
+         $web_admin = Role::create(['name' => 'admin', 'guard_name' => 'web']);
+         $web_admin->syncPermissions($webAdminPermissions);
+
+         // صلاحيات API فقط للأدوار API
+         $apiAdminPermissions = Permission::where('guard_name', 'api')->get();
+         $api_admin = Role::create(['name' => 'admin', 'guard_name' => 'api']);
+         $api_admin->syncPermissions($apiAdminPermissions);
 
          //Teacher Role
-         $teacher = Role::create(['name' => 'teacher', 'guard_name' => 'api']);
+         $web_teacher = Role::create(['name' => 'teacher', 'guard_name' => 'web']);
+         $api_teacher = Role::create(['name' => 'teacher', 'guard_name' => 'api']);
          $teacherPermissions = [
              'view assigned classes',
              'manage attendance',
@@ -29,25 +36,32 @@ class RoleSeeder extends Seeder
              'communicate with students',
              'communicate with parents',
          ];
-         $teacher->syncPermissions($teacherPermissions);
+         $web_teacher->syncPermissions($teacherPermissions);
+         $api_teacher->syncPermissions($teacherPermissions);
 
          //Parent Role
-         $parent = Role::create(['name' => 'parent', 'guard_name' => 'api']);
+         $web_parent = Role::create(['name' => 'parent', 'guard_name' => 'web']);
+         $api_parent = Role::create(['name' => 'parent', 'guard_name' => 'api']);
          $parentPermissions = [
             'view student performance',
             'view student attendance',
             'view student payments',
             'communicate with teachers',
          ];
-         $parent->syncPermissions($parentPermissions);
+         $api_parent->syncPermissions($parentPermissions);
+         $web_parent->syncPermissions($parentPermissions);
 
          //Student Role
-         $student = Role::create(['name' => 'student', 'guard_name' => 'api']);
+         $web_student = Role::create(['name' => 'student', 'guard_name' => 'web']);
+         $api_student = Role::create(['name' => 'student', 'guard_name' => 'api']);
+
          $studentPermissions = [
             'view own performance',
             'view own attendance',
             'communicate with teachers',
          ];
-         $student->syncPermissions($studentPermissions);
+         $web_student->syncPermissions($studentPermissions);
+         $api_student->syncPermissions($studentPermissions);
+
     }
 }
