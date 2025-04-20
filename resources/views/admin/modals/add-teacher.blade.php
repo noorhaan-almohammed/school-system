@@ -10,7 +10,7 @@
                 <label for="teacher-name">اسم المدرس</label>
                 <input type="text" id="teacher-name" name="name" placeholder="أدخل الاسم الكامل" value="{{ old('name') }}" required>
                 @error('name')
-                    <span class="login-error" role="alert">
+                    <span class="error" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -20,7 +20,7 @@
                 <label for="teacher-email">البريد الإلكتروني</label>
                 <input type="email" id="teacher-email" name="email" placeholder="أدخل البريد الإلكتروني" value="{{ old('email') }}" required>
                 @error('email')
-                    <span class="login-error" role="alert">
+                    <span class="error" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -30,7 +30,7 @@
                 <label for="password">كلمة المرور</label>
                 <input type="password" id="password" name="password" placeholder="أدخل كلمة المرور" required>
                 @error('password')
-                    <span class="login-error" role="alert">
+                    <span class="error" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
@@ -40,7 +40,7 @@
                 <label for="teacher-phone">رقم الهاتف</label>
                 <input type="tel" id="teacher-phone" name="phone_number" placeholder="أدخل رقم الهاتف" value="{{ old('phone_number') }}" required>
                 @error('phone_number')
-                    <span class="login-error" role="alert">
+                    <span class="error" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror

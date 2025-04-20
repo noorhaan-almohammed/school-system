@@ -457,7 +457,9 @@ body {
 .btn:hover {
     opacity: 0.9;
 }
-
+.error{
+    color : red;
+}
 /* أنماط الجداول */
 .content-page {
     background-color: white;
