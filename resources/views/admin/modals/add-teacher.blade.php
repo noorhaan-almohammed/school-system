@@ -46,6 +46,8 @@
                 @enderror
             </div>
 
+            <input type="hidden" id="role" name="role" value="teacher" required>
+
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary close-modal">إلغاء</button>
                 <button type="submit" class="btn btn-primary">إضافة المدرس</button>
