@@ -11,18 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
         editSubject: document.getElementById('edit-subject-modal')
     };
 
-    const forms = {
-        student: document.getElementById('student-form'),
-        teacher: document.getElementById('teacher-form'),
-        parent: document.getElementById('parent-form'),
-        subject: document.getElementById('subject-form'),
-        event: document.getElementById('event-form'),
-        editStudent: document.getElementById('edit-student-form'),
-        editTeacher: document.getElementById('edit-teacher-form'),
-        editParent: document.getElementById('edit-parent-form'),
-        editSubject: document.getElementById('edit-subject-form')
-    };
-
     // تنقل الصفحات
     document.querySelector('.nav-menu').addEventListener('click', function (e) {
         const link = e.target.closest('a');
@@ -53,6 +41,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.classList.contains('close-modal')) {
             e.target.closest('.modal').setAttribute('aria-hidden', 'true');
             e.target.closest('.modal').style.display = 'none';
+        }
+        // معالجة أحداث التعديل
+        if (e.target.closest('.edit-btn')) {
+            const row = e.target.closest('tr');
+            if (!row) return;
+            // فتح النموذج
+            toggleModal('editTeacher');
         }
     });
 

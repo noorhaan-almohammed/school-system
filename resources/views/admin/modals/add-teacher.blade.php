@@ -38,7 +38,7 @@
 
             <div class="form-group">
                 <label for="teacher-phone">رقم الهاتف</label>
-                <input type="tel" id="teacher-phone" name="phone_number" placeholder="أدخل رقم الهاتف" value="{{ old('phone_number') }}" required>
+                <input type="tel" id="teacher-phone" name="phone_number" placeholder="أدخل رقم الهاتف" value="{{ old('phone_number') }}">
                 @error('phone_number')
                     <span class="error" role="alert">
                         <strong>{{ $message }}</strong>

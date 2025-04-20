@@ -27,7 +27,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|string',
-            'phone_number' => 'string|min:8|max:100|unique:users,phone_number',
+            'phone_number' => 'nullable|string|min:8|max:100|unique:users,phone_number',
             'role' => 'required|string|in:teacher,parent,student',
         ];
     }
@@ -59,7 +59,7 @@ class RegisterRequest extends FormRequest
             'max' => ':attribute يجب ألا يتجاوز :max محرف.',
             'min' => ':attribute على الأقل :min محرف.',
             'unique' => ':attribute يجب أن يكون فريد.',
-            'string' => ':attribute سجب أن يكون حقل نصي.',
+            'string' => ':attribute يجب أن يكون حقل نصي.',
             'email' => ':attribute يجب أن يكون بريد الكتروني'
         ];
     }
