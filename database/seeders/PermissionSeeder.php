@@ -38,13 +38,14 @@ class PermissionSeeder extends Seeder
             'view student payments',
             'communicate with teachers',
 
-             // Student permissions
-             'view own performance',
-             'view own attendance',
-             'communicate with teachers',
-            ];
+            // Student permissions
+            'view own performance',
+            'view own attendance',
+        ];
 
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission,'guard_name' => 'api']);
-        }    }
+            Permission::create(['name' => $permission, 'guard_name' => 'web']);
+            Permission::create(['name' => $permission, 'guard_name' => 'api']);
+        }
+    }
 }

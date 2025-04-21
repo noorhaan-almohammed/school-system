@@ -31,7 +31,7 @@
 
                                     @error('email')
                                         <span class="login-error" role="alert">
-                                            <strong>{{ 'كلمة المرور أو الايميل غير صحيحين' }}</strong>
+                                            <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
                                 </div>

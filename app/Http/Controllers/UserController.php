@@ -1,49 +1,50 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Services\Auth\RegisterService;
+use App\Http\Requests\Auth\RegisterRequest;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    protected RegisterService $RegisterService;
+
+    public function __construct(RegisterService $RegisterService)
     {
-        //
+        $this->RegisterService = $RegisterService;
+    }
+    public function createUser(RegisterRequest $request)
+    {
+        $data = $request->validated();
+        $msg = $this->RegisterService->createUser($data);
+        return redirect()->back()->with('success', $msg);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function showTeacher($id)
     {
-        //
+        $teacher = User::role('teacher')->findOrFail($id);
+        return response()->json($teacher);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function updateTeacher(Request $request, $id)
     {
-        //
-    }
+        $teacher = User::role('teacher')->findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $teacher->id,
+            'phone_number' => 'nullable|string|max:20',
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $teacher->update($validated);
+
+        // إرجاع بيانات المعلم المحدثة
+        return response()->json([
+            'id' => $teacher->id,
+            'name' => $teacher->name,
+            'email' => $teacher->email,
+            'phone_number' => $teacher->phone_number,
+        ]);
     }
 }

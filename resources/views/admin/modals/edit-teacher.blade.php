@@ -4,28 +4,21 @@
             <h3 class="modal-title"><i class="fas fa-chalkboard-teacher"></i> تعديل بيانات المدرس</h3>
             <button class="close-modal">&times;</button>
         </div>
-        <form id="edit-teacher-form">
-            <input type="hidden" id="edit-teacher-id">
+        {{-- action="{{ route('teachers.update') }}" --}}
+        <form id="edit-teacher-form" method="POST" >
+            @csrf
+            <input type="hidden" id="edit-teacher-id" name="id">
             <div class="form-group">
                 <label for="edit-teacher-name">اسم المدرس</label>
-                <input type="text" id="edit-teacher-name" placeholder="أدخل الاسم الكامل" required>
+                <input type="text" id="edit-teacher-name" name="name" placeholder="أدخل الاسم الكامل" required>
             </div>
             <div class="form-group">
                 <label for="edit-teacher-email">البريد الإلكتروني</label>
-                <input type="email" id="edit-teacher-email" placeholder="أدخل البريد الإلكتروني" required>
+                <input type="email" id="edit-teacher-email" name="email" placeholder="أدخل البريد الإلكتروني" required>
             </div>
             <div class="form-group">
                 <label for="edit-teacher-phone">رقم الهاتف</label>
-                <input type="tel" id="edit-teacher-phone" placeholder="أدخل رقم الهاتف" required>
-            </div>
-            <div class="form-group">
-                <label for="edit-teacher-subject">المادة الدراسية</label>
-                <select id="edit-teacher-subject" required>
-                    <option value="">اختر المادة</option>
-                    <option value="math">الرياضيات</option>
-                    <option value="science">العلوم</option>
-                    <option value="arabic">اللغة العربية</option>
-                </select>
+                <input type="tel" id="edit-teacher-phone" name="phone_number" placeholder="أدخل رقم الهاتف" required>
             </div>
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary close-modal">إلغاء</button>

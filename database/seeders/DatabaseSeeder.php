@@ -33,5 +33,9 @@ class DatabaseSeeder extends Seeder
             TeachingAssignmentSeeder::class,
             SubjectPerformenceSeeder::class,
         ]);
+        $this->call([
+            PermissionSeeder::class,
+            RoleSeeder::class,
+        ]);
     }
 }
