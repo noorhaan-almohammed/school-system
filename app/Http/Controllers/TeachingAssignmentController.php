@@ -43,8 +43,10 @@ class TeachingAssignmentController extends Controller
             'message' => 'تم الإسناد بنجاح',
             'assignment' => [
                 'id' => $assignment->id,
+                'subject_id' => $assignment->subject_id,
                 'subject' => $assignment->subject->name,
                 'classroom' => $assignment->classroom->name,
+                'teacher' => $teacher->name,
             ],
         ]);
     }
@@ -55,8 +57,20 @@ class TeachingAssignmentController extends Controller
      */
     public function deleteAssignment(Teaching_assignment $assignment)
     {
+        $assignment->load(['subject', 'classroom', 'teacher']);
+
+        $subject_id = $assignment->subject_id;
+        $class_id = $assignment->class_id;
+        $teacher_id = $assignment->user_id;
+
         $assignment->delete();
 
-        return response()->json(['message' => 'تم حذف الإسناد بنجاح']);
+        return response()->json([
+            'message' => 'تم حذف الإسناد بنجاح',
+            'subject_id' => $subject_id,
+            'class_id' => $class_id,
+            'teacher_id' => $teacher_id,
+        ]);
     }
+
 }

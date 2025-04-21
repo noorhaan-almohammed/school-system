@@ -28,6 +28,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 closeModal(assignModal);
                 assignForm.reset();
 
+                /////////////////////
+                const subjectRow = document.querySelector(
+                    `#subjects-page tr[data-id="${data.assignment.subject_id}"]`
+                );
+
+                if (subjectRow) {
+                    const classCell =
+                        subjectRow.querySelector("td:nth-child(3)");
+                    const teacherCell =
+                        subjectRow.querySelector("td:nth-child(4)");
+
+                    // تحديث الصفوف: إذا لم يكن الصف موجودًا
+                    const existingClasses = Array.from(
+                        classCell.querySelectorAll("div")
+                    ).map((div) => div.textContent.trim());
+
+                    if (!existingClasses.includes(data.assignment.classroom)) {
+                        const classDiv = document.createElement("div");
+                        classDiv.textContent = data.assignment.classroom;
+                        classCell.appendChild(classDiv);
+                    }
+
+                    // تحديث المدرسين: إذا لم يكن الاسم موجودًا
+                    const existingTeachers = teacherCell.textContent
+                        .split("،")
+                        .map((t) => t.trim());
+
+                    if (!existingTeachers.includes(data.assignment.teacher)) {
+                        if (teacherCell.textContent.trim() !== "") {
+                            teacherCell.textContent += "، ";
+                        }
+                        teacherCell.textContent += data.assignment.teacher;
+                    }
+                }
+
+                //////////////////////////////
                 // ابحث عن صف المدرس حسب الـ teacher_id
                 const teacherRow = document.querySelector(
                     `tr[data-id="${formData.get("teacher_id")}"]`
@@ -39,7 +75,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         teacherRow.querySelector("td:nth-child(5)");
 
                     const subjectDiv = document.createElement("div");
-                    subjectDiv.setAttribute("data-assignment-id", data.assignment.id);
+                    subjectDiv.setAttribute(
+                        "data-assignment-id",
+                        data.assignment.id
+                    );
                     subjectDiv.classList.add("assignment");
 
                     subjectDiv.innerHTML = `
@@ -89,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setTimeout(() => alert.classList.add("hide"), 3000);
         setTimeout(() => alert.remove(), 5500);
     }
+    // delete assign
     document.body.addEventListener("click", function (e) {
         if (e.target.classList.contains("delete-assignment")) {
             const id = e.target.dataset.id;
@@ -112,13 +152,63 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                     showAlert("success", data.message);
                     document
-                    .querySelectorAll(`[data-assignment-id="${id}"]`)
-                    .forEach((el) => {
-                        el.remove();
-                    });
+                        .querySelectorAll(`[data-assignment-id="${id}"]`)
+                        .forEach((el) => el.remove());
+
+                    // تحديث جدول المواد الدراسية
+                    const subjectRow = document.querySelector(
+                        `#subjects-page tr[data-id="${data.subject_id}"]`
+                    );
+                    if (subjectRow) {
+                        const teacherCell =
+                            subjectRow.querySelector("td:nth-child(4)");
+                        const classCell =
+                            subjectRow.querySelector("td:nth-child(3)");
+
+                        // حذف اسم المعلم إذا لم يعد لديه أي إسناد مرتبط بنفس المادة
+                        const remainingTeacherAssignments =
+                            document.querySelectorAll(
+                                `#teachers-page tr[data-id="${data.teacher_id}"] [data-assignment-id]`
+                            );
+                        const stillAssignedToThisSubject = Array.from(
+                            remainingTeacherAssignments
+                        ).some((el) =>
+                            el.textContent.includes(
+                                subjectRow
+                                    .querySelector("td:nth-child(2)")
+                                    .textContent.trim()
+                            )
+                        );
+
+                        if (!stillAssignedToThisSubject && teacherCell) {
+                            // إزالة اسم المعلم
+                            const teacherName = teacherCell.textContent.trim();
+                            if (teacherName.includes("،")) {
+                                const updated = teacherName
+                                    .split("،")
+                                    .filter(
+                                        (name) =>
+                                            name.trim() !== data.teacher_name
+                                    )
+                                    .join("، ");
+                                teacherCell.textContent = updated;
+                            } else {
+                                teacherCell.textContent = "";
+                            }
+                        }
+
+                        // إزالة الصف إذا لم يعد له أي إسناد مرتبط بنفس المادة
+                        const classDivs = classCell.querySelectorAll("div");
+                        classDivs.forEach((div) => {
+                            if (div.textContent.trim() === data.class_name) {
+                                div.remove();
+                            }
+                        });
+                    }
                 })
                 .catch(() => showAlert("error", "حدث خطأ أثناء الحذف"));
         }
+        // delete teacher
         if (e.target.classList.contains("delete-btn")) {
             const id = e.target.dataset.id;
             const confirmed = confirm("هل أنت متأكد من حذف هذا المدرس");
@@ -141,10 +231,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                     showAlert("success", data.message);
                     document
-                    .querySelectorAll(`[data-id="${id}"]`)
-                    .forEach((el) => {
-                        el.remove();
-                    });
+                        .querySelectorAll(`[data-id="${id}"]`)
+                        .forEach((el) => {
+                            el.remove();
+                        });
                 })
                 .catch(() => showAlert("error", "حدث خطأ أثناء الحذف"));
         }

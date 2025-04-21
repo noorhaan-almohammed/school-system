@@ -12,25 +12,37 @@
                     <th>كود المادة</th>
                     <th>اسم المادة</th>
                     <th>الصفوف</th>
-                    <th>عدد الحصص</th>
                     <th>المدرس المسؤول</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                {{-- <tr data-modal="subject" data-id="{{ $subject->id }}"> --}}
-                    <td>MATH-101</td>
-                    <td>الرياضيات</td>
-                    <td>الأول - الثاني - الثالث</td>
-                    <td>5</td>
-                    <td>خالد عبدالله</td>
-                    <td>
-                        <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
+                @php
+                    use App\Models\Subject;
+
+                    $subjects = Subject::with(['teachers', 'classes'])->get();
+                @endphp
+                @foreach ($subjects as $subject)
+                    <tr data-modal="subject" data-id="{{ $subject->id }}">
+                        <td>{{ 'Sub' . str_pad($subject->id, 4, '0', STR_PAD_LEFT) }}</td>
+                        <td>{{ $subject->name }}</td>
+                        <td>
+                            @foreach ($subject->classes as $class)
+                                <div>{{ $class->name ?? '—' }}</div>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($subject->teachers as $teacher)
+                                <div>{{ $teacher->name ?? '—' }}</div>
+                            @endforeach
+                        </td>
+                        <td>
+                            {{-- <button class="action-btn view-btn"><i class="fas fa-eye"></i></button> --}}
+                            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                            <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
 
