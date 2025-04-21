@@ -31,8 +31,6 @@ class SubjectSeeder extends Seeder
         foreach($subjects as $subject){
             Subject::create([
                 'name'=>$subject,
-                'created_at'=>now(),
-                'updated_at'=>now()
             ]);
         }
     }

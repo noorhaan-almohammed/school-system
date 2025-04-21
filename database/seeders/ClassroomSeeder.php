@@ -13,22 +13,22 @@ class ClassroomSeeder extends Seeder
      */
     public function run(): void
     {
-        $classroom = Classroom::create([
+        Classroom::create([
             'name' => 'الأول',
         ]);
-        $classroom = Classroom::create([
+        Classroom::create([
             'name' => 'الثاني',
         ]);
-        $classroom = Classroom::create([
+        Classroom::create([
             'name' => 'الثالث',
         ]);
-        $classroom = Classroom::create([
+        Classroom::create([
             'name' => 'الرابع',
         ]);
-        $classroom = Classroom::create([
+        Classroom::create([
             'name' => 'الخامس',
         ]);
-        $classroom = Classroom::create([
+        Classroom::create([
             'name' => 'السادس',
         ]);
 

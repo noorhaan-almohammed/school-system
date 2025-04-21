@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\parent_student;
+use App\Models\ParentStudent;
 use Illuminate\Database\Seeder;
 
 class ParentStudentSeeder extends Seeder
@@ -39,7 +39,7 @@ class ParentStudentSeeder extends Seeder
         }
 
         foreach ($parent_student as $x) {
-            parent_student::create($x);
+            ParentStudent::create($x);
         }
     }
 }

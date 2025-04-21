@@ -20,64 +20,23 @@ class TeachingAssignmentSeeder extends Seeder
         $classrooms = Classroom::all();
         $teachers   = User::role('teacher')->get();
 
-        teaching_assignment::create([
-            'class_id'   => $classrooms[1],
-            'subject_id' => $subjects[1],
-            'teacher_id' => $teachers[1],
-        ]);
-        teaching_assignment::create([
-            'class_id'   => $classrooms[2],
-            'subject_id' => $subjects[1],
-            'teacher_id' => $teachers[1],
-        ]);
+        $assignments = [
+            [$classrooms[1]->id, $subjects[1]->id, $teachers[1]->id],
+            [$classrooms[2]->id, $subjects[1]->id, $teachers[1]->id],
+            [$classrooms[3]->id, $subjects[3]->id, $teachers[2]->id],
+            [$classrooms[4]->id, $subjects[3]->id, $teachers[2]->id],
+            [$classrooms[4]->id, $subjects[4]->id, $teachers[3]->id],
+            [$classrooms[5]->id, $subjects[4]->id, $teachers[3]->id],
+            [$classrooms[1]->id, $subjects[2]->id, $teachers[4]->id],
+            [$classrooms[5]->id, $subjects[2]->id, $teachers[4]->id],
+        ];
 
-        teaching_assignment::create([
-            'class_id'   => $classrooms[3],
-            'subject_id' => $subjects[3],
-            'teacher_id' => $teachers[2],
-        ]);
-        teaching_assignment::create([
-            'class_id'   => $classrooms[4],
-            'subject_id' => $subjects[3],
-            'teacher_id' => $teachers[2],
-        ]);
-
-
-        teaching_assignment::create([
-            'class_id'   => $classrooms[4],
-            'subject_id' => $subjects[4],
-            'teacher_id' => $teachers[3],
-        ]);
-        teaching_assignment::create([
-            'class_id'   => $classrooms[5],
-            'subject_id' => $subjects[4],
-            'teacher_id' => $teachers[3],
-        ]);
-        teaching_assignment::create([
-            'class_id'   => $classrooms[6],
-            'subject_id' => $subjects[4],
-            'teacher_id' => $teachers[3],
-        ]);
-
-
-        teaching_assignment::create([
-            'class_id'   => $classrooms[1],
-            'subject_id' => $subjects[2],
-            'teacher_id' => $teachers[4],
-        ]);
-        teaching_assignment::create([
-            'class_id'   => $classrooms[5],
-            'subject_id' => $subjects[2],
-            'teacher_id' => $teachers[4],
-        ]);
-
-
-        teaching_assignment::create([
-            'class_id'   => $classrooms[6],
-            'subject_id' => $subjects[1],
-            'teacher_id' => $teachers[5],
-        ]);
-
-
+        foreach ($assignments as [$class_id, $subject_id, $teacher_id]) {
+            teaching_assignment::create([
+                'class_id'   => $class_id,
+                'subject_id' => $subject_id,
+                'teacher_id' => $teacher_id,
+            ]);
+        }
     }
 }
