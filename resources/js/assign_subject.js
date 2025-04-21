@@ -40,14 +40,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     const subjectDiv = document.createElement("div");
                     subjectDiv.setAttribute("data-assignment-id", data.assignment.id);
-                    subjectDiv.style.display = "flex";
-                    subjectDiv.style.justifyContent = "space-between";
-                    subjectDiv.style.alignItems = "center";
-                    subjectDiv.style.gap = "8px"; // للمسافة بين النص والزر
+                    subjectDiv.classList.add("assignment");
 
                     subjectDiv.innerHTML = `
                         <span>${data.assignment.subject}</span>
-                        <button class="delete-assignment" data-id="${data.assignment.id}" style="border: none; background: transparent; cursor: pointer;">🗑️</button>
+                        <button class="delete-assignment" data-id="${data.assignment.id}">🗑️</button>
                     `;
                     subjectCell.appendChild(subjectDiv);
 
@@ -115,8 +112,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                     showAlert("success", data.message);
                     document
-                        .querySelectorAll(`[data-assignment-id="${id}"]`)
-                        .forEach((el) => el.remove());
+                    .querySelectorAll(`[data-assignment-id="${id}"]`)
+                    .forEach((el) => {
+                        el.remove();
+                    });
                 })
                 .catch(() => showAlert("error", "حدث خطأ أثناء الحذف"));
         }

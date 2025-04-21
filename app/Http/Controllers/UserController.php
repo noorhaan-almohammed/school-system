@@ -78,6 +78,7 @@ class UserController extends Controller
         return response()->json([
             'message' => 'تم الإسناد بنجاح',
             'assignment' => [
+                'id' => $assignment->id,
                 'subject' => $assignment->subject->name,
                 'classroom' => $assignment->classroom->name,
             ],

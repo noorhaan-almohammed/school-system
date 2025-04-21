@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (teacherRow) {
                 teacherRow.querySelector('td:nth-child(2)').textContent = data.name;
                 teacherRow.querySelector('td:nth-child(3)').textContent = data.email;
-                teacherRow.querySelector('td:nth-child(5)').textContent = data.phone_number;
+                teacherRow.querySelector('td:nth-child(6)').textContent = data.phone_number;
 
                 // إغلاق المودال
                 const modal = document.getElementById('edit-teacher-modal');

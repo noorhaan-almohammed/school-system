@@ -6,31 +6,33 @@ use App\Models\Classroom;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ClassroomSeeder extends Seeder
+class ClassRoomSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Classroom::create([
-            'name' => 'الأول',
-        ]);
-        Classroom::create([
-            'name' => 'الثاني',
-        ]);
-        Classroom::create([
-            'name' => 'الثالث',
-        ]);
-        Classroom::create([
-            'name' => 'الرابع',
-        ]);
-        Classroom::create([
-            'name' => 'الخامس',
-        ]);
-        Classroom::create([
-            'name' => 'السادس',
-        ]);
-
+        $classes = [
+            'الصف الأول',
+            'الصف الثاني',
+            'الصف الثالث',
+            'الصف الرابع',
+            'الص الخامس',
+            'الصف السادس',
+            'الصف السابع',
+            'الصف الثامن',
+            'الصف التاسع',
+            'السف العاشر',
+            'الصف الحادي عشر',
+            'الصف الثاني عشر',
+        ];
+        foreach($classes as $class){
+            Classroom::create([
+                'name'=>$class,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ]);
+        }
     }
 }
