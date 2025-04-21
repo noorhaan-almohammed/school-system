@@ -39,13 +39,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         teacherRow.querySelector("td:nth-child(5)");
 
                     const subjectDiv = document.createElement("div");
-                    subjectDiv.setAttribute(
-                        "data-assignment-id",
-                        data.assignment.id
-                    );
-                    subjectDiv.innerHTML = `${data.assignment.subject}
-                                            <button class="delete-assignment" data-id="${data.assignment.id}">🗑️</button>
-                                           `;
+                    subjectDiv.setAttribute("data-assignment-id", data.assignment.id);
+                    subjectDiv.style.display = "flex";
+                    subjectDiv.style.justifyContent = "space-between";
+                    subjectDiv.style.alignItems = "center";
+                    subjectDiv.style.gap = "8px"; // للمسافة بين النص والزر
+
+                    subjectDiv.innerHTML = `
+                        <span>${data.assignment.subject}</span>
+                        <button class="delete-assignment" data-id="${data.assignment.id}" style="border: none; background: transparent; cursor: pointer;">🗑️</button>
+                    `;
                     subjectCell.appendChild(subjectDiv);
 
                     const classDiv = document.createElement("div");
