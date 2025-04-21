@@ -15,9 +15,13 @@ Route::get('/admin', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/createUser',[UserController::class , 'createUser'])->name('createWebUser');
+Route::post('/createUser', [UserController::class, 'createUser'])->name('createWebUser');
 
 
 // routes/web.php
 Route::get('/teachers/{id}', [UserController::class, 'showTeacher']);
 Route::post('/teachers/{id}', [UserController::class, 'updateTeacher']);
+
+
+Route::post('/teachers/{teacher}/assign-subject', [UserController::class, 'assignSubject']);
+Route::delete('/assignments/{assignment}', [UserController::class, 'deleteAssignment']);

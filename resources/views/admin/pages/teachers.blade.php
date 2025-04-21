@@ -35,7 +35,17 @@
                         <td>{{ $teacher->email }}</td>
                         <td>
                             @foreach ($teacher->teachingAssignments as $assignment)
-                                <div>{{ $assignment->subject->name ?? '—' }}</div>
+                                <div data-assignment-id="{{ $assignment->id }}">
+                                    {{ $assignment->subject->name ?? '—' }}
+                                    <button class="delete-assignment" data-id="{{ $assignment->id }}">🗑️</button>
+                                </div>
+                            @endforeach
+                        </td>
+                        <td>
+                            @foreach ($teacher->teachingAssignments as $assignment)
+                                <div data-assignment-id="{{ $assignment->id }}">
+                                    {{ $assignment->classroom->name ?? '—' }}
+                                </div>
                             @endforeach
                         </td>
                         <td>

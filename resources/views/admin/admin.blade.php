@@ -12,16 +12,16 @@
 
 <body>
     @if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-@if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-@endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="dashboard">
         <!-- الشريط الجانبي -->
         @include('admin.sidebar')
@@ -51,6 +51,7 @@
     <!-- نموذج إضافة مدرس -->
     @include('admin.modals.add-teacher')
 
+    @include('admin.modals.assign-class-subject')
     <!-- نموذج إضافة ولي أمر -->
     @include('admin.modals.add-parent')
 
@@ -70,7 +71,7 @@
     <!-- نموذج تعديل مادة دراسية -->
     @include('admin.modals.edit-subject')
 
-    @vite(['resources/js/modals_core.js','resources/js/modals_edit.js'])
+    @vite(['resources/js/modals_core.js', 'resources/js/modals_edit.js', 'resources/js/assign_subject.js'])
 
 </body>
 
