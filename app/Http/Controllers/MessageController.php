@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\message;
 use Illuminate\Http\Request;
+use App\Services\MessageService;
 
 class MessageController extends Controller
 {
+    protected MessageService $MessageService;
+    public function __construct(MessageService $MessageService)
+    {
+    $this->MessageService = $MessageService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -20,7 +26,8 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $Message = $this->MessageService->sendMessage($request->validated());
+        return self::success(null, 'Message Sent Successfully',201);
     }
 
     /**

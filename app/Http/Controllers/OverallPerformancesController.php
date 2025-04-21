@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OverallPerformances;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\OverallPerformances;
+use App\Http\Resources\OverallPerformanceResource;
 
 class OverallPerformancesController extends Controller
 {
@@ -46,4 +48,11 @@ class OverallPerformancesController extends Controller
     {
         //
     }
+    public function OverallPerformance(User $student)
+    {
+        $OverallPerformance = $student->load('overallPerformance');
+        return self::success( new OverallPerformanceResource($OverallPerformance), 'Student All Performance Retrieved Successfully',200);
+
+    }
+
 }

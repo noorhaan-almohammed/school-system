@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\Auth\RegisterService;
@@ -48,5 +47,4 @@ class UserController extends Controller
             'phone_number' => $teacher->phone_number,
         ]);
     }
-
 }

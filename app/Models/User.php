@@ -88,9 +88,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(Attendance::class, 'student_id');
     }
+  
     public function teachingAssignments()
     {
         return $this->hasMany(Teaching_assignment::class, 'teacher_id');
     }
-
+    public function getPerformanceForSubject($subject)
+    {
+    return $this->subjectPerformances()
+        ->whereHas('teachingAssignment', function ($query) use ($subject) {
+            $query->where('subject_id', $subject->id);
+        })
+        ->first();
+    }
 }
