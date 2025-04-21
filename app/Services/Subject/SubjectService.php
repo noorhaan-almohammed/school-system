@@ -3,6 +3,7 @@ namespace App\Services\Subject;
 
 use App\Models\Subject;
 use Exception;
+use Mockery\Matcher\Subset;
 
 class SubjectService{
     /**
@@ -29,10 +30,14 @@ class SubjectService{
      * @throws \Exception
      * @return Subject
      */
-    public function updateSubject(array $data , Subject $subject){
+    public function updateSubject(array $data , $id){
         try{
+            $subject = Subject::findOrFail($id);
             $subject->update($data);
-            return $subject->load(['teachers:name,email,phone_number','classes:name']);
+            return response()->json([
+                'id' => $subject->id,
+                'name' => $subject->name,
+            ]);
         }catch(Exception $e){
             throw new Exception('Error in Update Subject '.$e->getMessage());
         }

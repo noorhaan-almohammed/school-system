@@ -40,9 +40,10 @@ class SubjectController extends Controller
      * @param \App\Models\Subject $subject
      * @return \Illuminate\Http\JsonResponse
      */
-    public function show(Subject $subject)
+    public function show($id)
     {
-        return $this->success($subject->load(['teachers:name,email,phone_number','classes:name']));
+        $Subject = Subject::find($id);
+        return response()->json($Subject);
     }
 
     /**
@@ -51,9 +52,9 @@ class SubjectController extends Controller
      * @param \App\Models\Subject $subject
      * @return Subject
      */
-    public function update(UpdateSubjectRequest $request, Subject $subject)
+    public function update(UpdateSubjectRequest $request, $id)
     {
-        return $this->subjectService->updateSubject($request->validated(),$subject);
+        return $this->subjectService->updateSubject($request->validated(),$id);
     }
 
     /**

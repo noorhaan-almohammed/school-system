@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\TeachingAssignmentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TeachingAssignmentController;
 
 
 Auth::routes();
@@ -17,3 +18,8 @@ Route::delete('/users/{id}',[UserController::class, 'deleteUser']);
 // teaching assignment end points
 Route::post('/teachers/{teacher}/assign-subject', [TeachingAssignmentController::class, 'assignSubject']);
 Route::delete('/assignments/{assignment}', [TeachingAssignmentController::class, 'deleteAssignment']);
+
+
+// subject
+Route::get('/subject/{id}', [SubjectController::class, 'show']);
+Route::post('/subject/{id}', [SubjectController::class, 'update']);

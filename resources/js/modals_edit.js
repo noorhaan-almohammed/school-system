@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!row) return;
 
             const modalType = row.getAttribute("data-modal");
-            if (modalType) {
+            if (modalType == "teacher") {
                 const userId = row.getAttribute("data-id");
                 fetch(`/users/${userId}`)
                     .then((response) => response.json())
@@ -39,6 +39,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                     .catch((error) => {
                         alert("حدث خطأ أثناء جلب بيانات المعلم");
+                        console.error(error);
+                    });
+            }
+            if (modalType == "subject") {
+                const subjectId = row.getAttribute("data-id");
+                fetch(`/subject/${subjectId}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById("edit-subject-id").value =
+                            data.id;
+                        document.getElementById("edit-subject-name").value =
+                            data.name;
+                        toggleEditModal("editSubject");
+                    })
+                    .catch((error) => {
+                        alert("حدث خطأ أثناء جلب بيانات المادة");
                         console.error(error);
                     });
             }
@@ -101,6 +117,55 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 alert("تم تحديث بيانات المدرس بنجاح");
+            })
+            .catch(async (error) => {
+                if (error.status === 422) {
+                    const res = await error.json();
+                    alert(Object.values(res.errors).join("\n"));
+                } else {
+                    alert("حدث خطأ أثناء التحديث");
+                    console.error(error);
+                }
+            });
+    });
+
+    // تحديث بيانات المادة عند حفظ التعديلات
+    const editSubjectForm = document.getElementById("edit-subject-form");
+    editSubjectForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const id = document.getElementById("edit-subject-id").value;
+        const formData = new FormData(this);
+
+        fetch(`/subject/${id}`, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]'
+                ).content,
+                Accept: "application/json",
+            },
+            body: formData,
+        })
+            .then((response) => {
+                if (!response.ok) throw response;
+                return response.json();
+            })
+            .then((data) => {
+                // تحديث البيانات في السطر مباشرة
+                const subjectRow = document.querySelector(
+                    `tr[data-id="${id}"]`
+                );
+                if (subjectRow) {
+                    subjectRow.querySelector("td:nth-child(2)").textContent =
+                        data.name;
+                    // إغلاق المودال
+                    const modal = document.getElementById("edit-subject-modal");
+                    modal.setAttribute("aria-hidden", "true");
+                    modal.style.display = "none";
+                }
+
+                alert("تم تحديث بيانات المادة بنجاح");
             })
             .catch(async (error) => {
                 if (error.status === 422) {
