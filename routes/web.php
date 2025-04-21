@@ -13,7 +13,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::post('/createUser', [UserController::class, 'createUser'])->name('createWebUser');
 Route::get('/users/{id}', [UserController::class, 'showUser']);
 Route::post('/users/{id}', [UserController::class, 'updateUser']);
-
+Route::delete('/users/{id}',[UserController::class, 'deleteUser']);
 // teaching assignment end points
 Route::post('/teachers/{teacher}/assign-subject', [TeachingAssignmentController::class, 'assignSubject']);
 Route::delete('/assignments/{assignment}', [TeachingAssignmentController::class, 'deleteAssignment']);

@@ -34,8 +34,8 @@ class UserController extends Controller
      */
     public function showUser($id)
     {
-        $teacher = User::findOrFail($id);
-        return response()->json($teacher);
+        $user = User::findOrFail($id);
+        return response()->json($user);
     }
     /**
      * update user info
@@ -47,5 +47,10 @@ class UserController extends Controller
     {
        $data = $request->validated();
        return $this->UsererService->updateUser($data,$id);
+    }
+
+    public function deleteUser($id)
+    {
+        return $this->UsererService->deleteUser($id);
     }
 }

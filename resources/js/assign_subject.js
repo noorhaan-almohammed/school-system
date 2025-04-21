@@ -119,5 +119,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch(() => showAlert("error", "حدث خطأ أثناء الحذف"));
         }
+        if (e.target.classList.contains("delete-btn")) {
+            const id = e.target.dataset.id;
+            const confirmed = confirm("هل أنت متأكد من حذف هذا المدرس");
+
+            if (!confirmed) return;
+
+            fetch(`/users/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-TOKEN": document
+                        .querySelector('meta[name="csrf-token"]')
+                        .getAttribute("content"),
+                    Accept: "application/json",
+                },
+            })
+                .then((res) => {
+                    if (!res.ok) throw res;
+                    return res.json();
+                })
+                .then((data) => {
+                    showAlert("success", data.message);
+                    document
+                    .querySelectorAll(`[data-id="${id}"]`)
+                    .forEach((el) => {
+                        el.remove();
+                    });
+                })
+                .catch(() => showAlert("error", "حدث خطأ أثناء الحذف"));
+        }
     });
 });

@@ -19,6 +19,7 @@
             </thead>
             <tbody>
                 <tr>
+                    {{-- <tr data-modal="parent" data-id="{{ $parent->id }}"> --}}
                     <td>P1001</td>
                     <td>أحمد محمد</td>
                     <td>أب</td>

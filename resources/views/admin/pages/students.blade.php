@@ -20,6 +20,7 @@
             </thead>
             <tbody>
                 <tr>
+                {{-- <tr data-modal="student" data-id="{{ $student->id }}"> --}}
                     <td>1001</td>
                     <td><img src="https://via.placeholder.com/40" alt="صورة الطالب" class="user-avatar">
                     </td>

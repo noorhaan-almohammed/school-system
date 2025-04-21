@@ -49,4 +49,10 @@ class UsererService{
             'phone_number' => $user->phone_number,
         ]);
     }
+
+    public function deleteUser($id){
+        $user = User::findOrFail($id);
+        $user->delete($user);
+        return response()->json(['message' => 'تم حذف '.$user->name.' بنجاح']);
+    }
 }

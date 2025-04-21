@@ -19,6 +19,7 @@
             </thead>
             <tbody>
                 <tr>
+                {{-- <tr data-modal="subject" data-id="{{ $subject->id }}"> --}}
                     <td>MATH-101</td>
                     <td>الرياضيات</td>
                     <td>الأول - الثاني - الثالث</td>
