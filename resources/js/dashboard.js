@@ -46,10 +46,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.target.closest('.edit-btn')) {
             const row = e.target.closest('tr');
             if (!row) return;
-            // فتح النموذج
-            toggleModal('editTeacher');
+
+            // استخراج النوع بناءً على البيانات المرتبطة (مثل data-modal)
+            const modalType = row.getAttribute('data-modal');
+
+            if (modalType) {
+                // افتح المودال المناسب
+                toggleModal(`edit${capitalizeFirstLetter(modalType)}`);
+            }
         }
     });
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
     // تأثير hover على الكروت
     document.querySelectorAll('.card').forEach(card => {
@@ -69,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     alerts.forEach(alert => {
         setTimeout(() => {
             alert.classList.add('hide');
-        }, 5000); // بعد 5 ثواني
+        }, 3000); // بعد 3 ثواني
 
         // إزالة التنبيه من DOM بعد الانيميشن
         setTimeout(() => {

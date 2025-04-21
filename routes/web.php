@@ -16,3 +16,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/createUser',[UserController::class , 'createUser'])->name('createWebUser');
+
+
+// routes/web.php
+Route::get('/teachers/{id}', [UserController::class, 'showTeacher']);
+Route::post('/teachers/{id}', [UserController::class, 'updateTeacher']);

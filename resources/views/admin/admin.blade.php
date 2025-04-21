@@ -70,7 +70,8 @@
     <!-- نموذج تعديل مادة دراسية -->
     @include('admin.modals.edit-subject')
 
-    @vite(['resources/js/dashboard.js'])
+    @vite(['resources/js/modals_core.js','resources/js/modals_edit.js'])
+
 </body>
 
 </html>

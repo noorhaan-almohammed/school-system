@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable,HasRoles;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -45,7 +45,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'phone_number'=>'string'
+            'phone_number' => 'string'
         ];
     }
     // Get the classrooms associated with the teacher.
@@ -86,7 +86,21 @@ class User extends Authenticatable
         return $this->hasMany(SubjectPerformance::class, 'student_id');
     }
     // Get the attendance records for the student.
-    public function attendances(){
+    public function attendances()
+    {
         return $this->hasMany(Attendance::class, 'student_id');
+    }
+  
+    public function teachingAssignments()
+    {
+        return $this->hasMany(Teaching_assignment::class, 'teacher_id');
+    }
+    public function getPerformanceForSubject($subject)
+    {
+    return $this->subjectPerformances()
+        ->whereHas('teachingAssignment', function ($query) use ($subject) {
+            $query->where('subject_id', $subject->id);
+        })
+        ->first();
     }
 }
