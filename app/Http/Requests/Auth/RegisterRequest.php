@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
 use App\Rules\StrongPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,7 +15,11 @@ class RegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        /**
+         * @var User $user
+         */
+        $user = Auth::user();
+        return Auth::check() && $user->hasRole('admin');
     }
 
     /**

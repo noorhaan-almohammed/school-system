@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class SubjectSeeder extends Seeder
 {
@@ -13,17 +15,25 @@ class SubjectSeeder extends Seeder
      */
     public function run(): void
     {
-        $subject = Subject::create([
-            'name' => 'رياضيات',
-        ]);
-        $subject = Subject::create([
-            'name' => 'عربي',
-        ]);
-        $subject = Subject::create([
-            'name' => 'علوم',
-        ]);
-        $subject = Subject::create([
-            'name' => 'لغة',
-        ]);
+        $subjects = [
+            'اللغة العربية',
+            'اللغة الإنجلزية',
+            'اللغة الفرنسية',
+            'الرياضيات',
+            'التربية الدينية',
+            'التربية الوطنية',
+            'التربية الفنية',
+            'التربية الموسيقية',
+            'الرياضة',
+            'العلوم',
+            'التكنولوجيا',
+        ];
+        foreach($subjects as $subject){
+            Subject::create([
+                'name'=>$subject,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ]);
+        }
     }
 }
