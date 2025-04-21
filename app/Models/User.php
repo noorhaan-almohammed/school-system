@@ -48,49 +48,59 @@ class User extends Authenticatable
             'phone_number' => 'string'
         ];
     }
-    public function classRooms()
-    {
-        return $this->belongsToMany(Classroom::class, 'teaching_assignments', 'teacher_id', 'class_id');
+    // Get the classrooms associated with the teacher.
+    public function classRooms(){
+        return $this->belongsToMany(Classroom::class , 'teaching_assignments','teacher_id','class_id');
     }
-    public function subjects()
-    {
-        return $this->belongsToMany(Subject::class, 'teaching_assignments', 'teacher_id', 'subject_id');
+    // Get the subjects assigned to the teacher.
+    public function subjects(){
+        return $this->belongsToMany(Subject::class, 'teaching_assignments','teacher_id','subject_id');
     }
-    public function receivedMessages()
-    {
+    // Get the messages received by the user.
+    public function receivedMessages(){
         return $this->hasMany(message::class, 'Recieve_id');
     }
-    public function sentMessages()
-    {
+
+    // Get the messages sent by the user.
+    public function sentMessages(){
         return $this->hasMany(message::class, 'Sender_id');
     }
-    public function overallPerformance()
-    {
-        return $this->hasOne(OverallPerformances::class, 'student_id');
+    // Get the overall performance record for the student.
+    public function overallPerformance(){
+        return $this->hasOne(OverallPerformances::class ,'student_id');
     }
-    public function parents()
-    {
+    // Get the parents associated with a student.
+    public function parents(){
         return $this->belongsToMany(User::class, 'parent_students', 'student_id', 'parent_id');
     }
-    public function children()
-    {
+    // Get the children associated with a parent.
+    public function children(){
         return $this->belongsToMany(User::class, 'parent_students', 'parent_id', 'student_id');
     }
-    public function payments()
-    {
-        return $this->hasMany(payment::class, 'student_id');
+    // Get the payment records associated with the student.
+    public function payments(){
+        return $this->hasMany(payment::class , 'student_id');
     }
-    public function subjectPerformances()
-    {
+    // Get the subject performance records for the student.
+    public function subjectPerformances(){
         return $this->hasMany(SubjectPerformance::class, 'student_id');
     }
+    // Get the attendance records for the student.
     public function attendances()
     {
         return $this->hasMany(Attendance::class, 'student_id');
     }
+  
     public function teachingAssignments()
     {
         return $this->hasMany(Teaching_assignment::class, 'teacher_id');
     }
-
+    public function getPerformanceForSubject($subject)
+    {
+    return $this->subjectPerformances()
+        ->whereHas('teachingAssignment', function ($query) use ($subject) {
+            $query->where('subject_id', $subject->id);
+        })
+        ->first();
+    }
 }
