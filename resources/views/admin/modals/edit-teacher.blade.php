@@ -18,8 +18,7 @@
             </div>
             <div class="form-group">
                 <label for="edit-teacher-phone">رقم الهاتف</label>
-                <input type="tel" id="edit-teacher-phone" name="phone_number" placeholder="أدخل رقم الهاتف"
-                    required>
+                <input type="tel" id="edit-teacher-phone" name="phone_number" placeholder="أدخل رقم الهاتف">
             </div>
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary close-modal">إلغاء</button>

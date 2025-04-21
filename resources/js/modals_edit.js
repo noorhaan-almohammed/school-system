@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const modalType = row.getAttribute('data-modal');
             if (modalType) {
                 const teacherId = row.getAttribute('data-id');
-                fetch(`/teachers/${teacherId}`)
+                fetch(`/users/${teacherId}`)
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('edit-teacher-id').value = data.id;
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const id = document.getElementById('edit-teacher-id').value;
         const formData = new FormData(this);
 
-        fetch(`/teachers/${id}`, {
+        fetch(`/users/${id}`, {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,

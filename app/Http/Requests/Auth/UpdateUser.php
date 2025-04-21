@@ -3,10 +3,11 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\User;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UpdateUser extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,12 +29,18 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'password'=>['required','string','confirmed',new StrongPassword()],
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email|max:255',
-            'password' => 'required|string',
-            'phone_number' => 'nullable|string|min:8|max:20|unique:users,phone_number',
-            'role' => 'required|string|in:teacher,parent,student',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->route('id')), 
+            ],
+            'phone_number' => [
+                'nullable',
+                'string',
+                'max:20',
+                Rule::unique('users', 'phone_number')->ignore($this->route('id')),
+            ],
         ];
     }
 
@@ -68,5 +75,4 @@ class RegisterRequest extends FormRequest
             'email' => ':attribute يجب أن يكون بريد الكتروني'
         ];
     }
-
 }

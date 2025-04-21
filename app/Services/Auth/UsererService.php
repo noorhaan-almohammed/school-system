@@ -5,7 +5,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 
-class RegisterService{
+class UsererService{
     public function createUser(array $data){
         try {
             $user = User::create([
@@ -32,8 +32,21 @@ class RegisterService{
 
         } catch (\Exception $e) {
             Log::error($e);
-            $message = 'حدث خطأ أثناء إضافة المدرس';
+            $message = 'حدث خطأ أثناء إضافة $roleLabel';
             return $message;
         }
+    }
+    public function updateUser($data, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->update($data);
+
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone_number' => $user->phone_number,
+        ]);
     }
 }

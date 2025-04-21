@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\teaching_assignment;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\SubjectPerformance;
-use App\Models\TeachingAssignment;
-use App\Models\User;
+use App\Models\teaching_assignment;
 
 class SubjectPerformenceSeeder extends Seeder
 {

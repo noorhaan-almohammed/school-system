@@ -7,7 +7,6 @@ use App\Models\Subject;
 use App\Models\Classroom;
 use Illuminate\Database\Seeder;
 use App\Models\teaching_assignment;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class TeachingAssignmentSeeder extends Seeder
 {
