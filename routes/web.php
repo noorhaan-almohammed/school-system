@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeachingAssignmentController;
 
@@ -23,3 +24,8 @@ Route::delete('/assignments/{assignment}', [TeachingAssignmentController::class,
 // subject
 Route::get('/subject/{id}', [SubjectController::class, 'show']);
 Route::post('/subject/{id}', [SubjectController::class, 'update']);
+
+
+//event
+Route::post('/createEvent', [EventController::class, 'createEvent'])->name('createEvent');
+

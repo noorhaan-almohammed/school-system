@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\event;
 use Illuminate\Http\Request;
+use App\Services\EventService;
+use App\Http\Requests\EventRequest;
 
 class EventController extends Controller
 {
+    protected EventService $EventService;
+
+    public function __construct(EventService $EventService)
+    {
+        $this->EventService = $EventService;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -18,9 +26,11 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function createEvent(EventRequest $request)
     {
-        
+        $data = $request->validated();
+        $msg = $this->EventService->createEvent($data);
+        return redirect()->back()->with('success', $msg);
     }
 
     /**
