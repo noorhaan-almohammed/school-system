@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\event;
 use Illuminate\Http\Request;
 use App\Services\EventService;
-use App\Http\Resources\EventResource;
-use App\Http\Requests\StoreEventRequest;
+use App\Http\Requests\EventRequest;
 
 class EventController extends Controller
 {
     protected EventService $EventService;
+
     public function __construct(EventService $EventService)
     {
         $this->EventService = $EventService;
@@ -27,10 +27,11 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventRequest $request)
+    public function createEvent(EventRequest $request)
     {
-        $event = $this->EventService->storeEvent($request->validated());
-        return self::success(new EventResource($event),'Event Created Successfully',201);
+        $data = $request->validated();
+        $msg = $this->EventService->createEvent($data);
+        return redirect()->back()->with('success', $msg);
     }
 
     /**

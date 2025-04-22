@@ -4,13 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class event extends Model
+class Event extends Model
 {
     protected $fillable = [
-        'name',
-        'date'
+        'title',
+        'date',
+        'time',
+        'duration',
+        'description'
     ];
     protected  $casts = [
-        'date'=>'date'
+        'date'=>'date',
+        'duration'=>'integer',
+        'time' => 'datetime:H:i',
     ];
+
+    public function getTimeAttribute($value)
+{
+    return \Carbon\Carbon::createFromFormat('H:i', $value);
+}
 }
