@@ -27,12 +27,12 @@ class SubjectController extends Controller
     /**
      * Store a newly created subject in the database.
      * @param \App\Http\Requests\Subject\CreateSubjectRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateSubjectRequest $request)
     {
-        $subject = $this->subjectService->createSubject($request->validated());
-        return $this->success($subject , 'Done Successfully!',201);
+        $msg = $this->subjectService->createSubject($request->validated());
+        return redirect()->back()->with('success',$msg);
     }
 
     /**
@@ -59,12 +59,12 @@ class SubjectController extends Controller
 
     /**
      * Remove the specified subject from the database.
-     * @param \App\Models\Subject $subject
-     * @return \Illuminate\Http\JsonResponse
+     * @param string $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Subject $subject)
+    public function destroy(string $id)
     {
-        $subject->delete();
-        return $this->success(null , 'Deleted Successfully');
+        $data = $this->subjectService->delete($id);
+        return redirect()->back()->with($data['status'],$data['message']);
     }
 }
