@@ -5,7 +5,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 
-class UsererService{
+class UserService{
     public function createUser(array $data){
         try {
             $user = User::create([
@@ -52,7 +52,7 @@ class UsererService{
 
     public function deleteUser($id){
         $user = User::findOrFail($id);
-        $user->delete($user);
+        $user->delete();
         return response()->json(['message' => 'تم حذف '.$user->name.' بنجاح']);
     }
 }

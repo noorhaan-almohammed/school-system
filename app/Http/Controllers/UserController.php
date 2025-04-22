@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Services\Auth\UsererService;
+use App\Services\Auth\UserService;
 use App\Http\Requests\Auth\UpdateUser;
 use App\Http\Requests\Auth\RegisterRequest;
 
 class UserController extends Controller
 {
-    protected UsererService $UsererService;
+    protected UserService $UserService;
 
-    public function __construct(UsererService $UsererService)
+    public function __construct(UserService $UserService)
     {
-        $this->UsererService = $UsererService;
+        $this->UserService = $UserService;
     }
     /**
      * create user with role depends on the form
@@ -24,7 +24,7 @@ class UserController extends Controller
     public function createUser(RegisterRequest $request)
     {
         $data = $request->validated();
-        $msg = $this->UsererService->createUser($data);
+        $msg = $this->UserService->createUser($data);
         return redirect()->back()->with('success', $msg);
     }
     /**
@@ -46,11 +46,11 @@ class UserController extends Controller
     public function updateUser(UpdateUser $request, $id)
     {
        $data = $request->validated();
-       return $this->UsererService->updateUser($data,$id);
+       return $this->UserService->updateUser($data,$id);
     }
 
     public function deleteUser($id)
     {
-        return $this->UsererService->deleteUser($id);
+        return $this->UserService->deleteUser($id);
     }
 }
