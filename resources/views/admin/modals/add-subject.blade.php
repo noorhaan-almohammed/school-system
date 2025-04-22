@@ -35,3 +35,14 @@
         </form>
     </div>
 </div>
+@if ($errors->any() && session('show_modal') === 'subject')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("add-subject-modal");
+            if (modal) {
+                modal.setAttribute("aria-hidden", "false");
+                modal.style.display = "flex";
+            }
+        });
+    </script>
+@endif

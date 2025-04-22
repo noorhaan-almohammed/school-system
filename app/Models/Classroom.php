@@ -15,4 +15,7 @@ class Classroom extends Model
     public function subjects(){
         return $this->belongsToMany(Subject::class,'teaching_assignments','class_id','subject_id');
     }
+    public function students(){
+        return $this->hasMany(User::class, 'class_id');
+    }
 }

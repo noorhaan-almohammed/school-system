@@ -32,3 +32,14 @@
         </form>
     </div>
 </div>
+@if ($errors->any() && session('show_modal') === 'parent')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("add-parent-modal");
+            if (modal) {
+                modal.setAttribute("aria-hidden", "false");
+                modal.style.display = "flex";
+            }
+        });
+    </script>
+@endif

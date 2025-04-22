@@ -33,3 +33,14 @@
         </form>
     </div>
 </div>
+@if ($errors->any() && session('show_modal') === 'event')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const modal = document.getElementById("add-event-modal");
+            if (modal) {
+                modal.setAttribute("aria-hidden", "false");
+                modal.style.display = "flex";
+            }
+        });
+    </script>
+@endif

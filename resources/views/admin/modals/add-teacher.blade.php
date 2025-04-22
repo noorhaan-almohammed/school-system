@@ -55,10 +55,9 @@
         </form>
     </div>
 </div>
-@if ($errors->any())
+@if ($errors->any() && session('show_modal') === 'teacher')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // فتح مودال المدرس إذا كان فيه أخطاء تحقق
             const modal = document.getElementById("add-teacher-modal");
             if (modal) {
                 modal.setAttribute("aria-hidden", "false");

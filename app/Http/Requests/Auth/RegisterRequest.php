@@ -5,6 +5,8 @@ namespace App\Http\Requests\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class RegisterRequest extends FormRequest
 {
@@ -34,6 +36,8 @@ class RegisterRequest extends FormRequest
             'password' => 'required|string',
             'phone_number' => 'nullable|string|min:8|max:20|unique:users,phone_number',
             'role' => 'required|string|in:teacher,parent,student',
+            'class_id' => 'nullable|integer|exists:classrooms,id',
+            'parent_id' => 'nullable|integer|exists:users,id'
         ];
     }
 
@@ -67,6 +71,23 @@ class RegisterRequest extends FormRequest
             'string' => ':attribute يجب أن يكون حقل نصي.',
             'email' => ':attribute يجب أن يكون بريد الكتروني'
         ];
+    }
+    /**
+     * when validation error ocured send type form to open modal
+     * @param \Illuminate\Contracts\Validation\Validator $validator
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
+     * @return never
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        $role = $this->input('role');
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('show_modal', $role)
+        );
     }
 
 }
