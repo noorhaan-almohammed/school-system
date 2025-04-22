@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class event extends Model
 {
     protected $fillable = [
-        'name',
-        'date'
+        'title',
+        'date',
+        'time',
+        'duration',
+        'description'
     ];
     protected  $casts = [
-        'date'=>'date'
+        'date'=>'date',
+        'time'=>'time',
+        'duration'=>'integer'
     ];
 }

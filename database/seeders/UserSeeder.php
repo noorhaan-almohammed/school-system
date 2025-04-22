@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => Hash::make('Admin@12345678'),
             'phone_number' => fake()->phoneNumber,
+            'class_id' => null,
         ]);
         $admin->assignRole('admin');
 
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('Teacher@12345678'),
                 'phone_number' => fake()->phoneNumber,
+                'class_id' => null,
             ]);
             $teacher->assignRole('teacher');
         }
@@ -39,9 +41,11 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('Parent@12345678'),
                 'phone_number' => fake()->phoneNumber,
+                'class_id' => null,
             ]);
             $parent->assignRole('parent');
         }
+
         for ($i = 1; $i <= 50; $i++) {
             $student = User::create([
                 'name' => "طالب{$i}",
@@ -49,6 +53,7 @@ class UserSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('Student@12345678'),
                 'phone_number' => null,
+                'class_id' => random_int(1,8),
             ]);
             $student->assignRole('student');
         }
