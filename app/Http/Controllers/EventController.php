@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\event;
+use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Services\EventService;
 use App\Http\Requests\EventRequest;
@@ -21,9 +21,9 @@ class EventController extends Controller
      */
     public function index()
     {
-            $events = $this->EventService->getEvents();
-            return self::paginated($events, EventResource::class, 'Events retrieved successfully', 200);
-        }
+        $events = Event::paginate(10);
+        return response()->json($events);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -38,9 +38,10 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(event $event)
+    public function show($id)
     {
-        //
+        $event = Event::findOrFail($id);
+        return response()->json($event);
     }
 
     /**
@@ -54,8 +55,9 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(event $event)
+    public function destroy(string $id)
     {
-        //
+        $msg = $this->EventService->deleteEvent($id);
+        return redirect()->back()->with('status',$msg);
     }
 }

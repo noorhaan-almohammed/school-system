@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\teaching_assignment;
+use App\Models\TeachingAssignment;
 
 class TeachingAssignmentController extends Controller
 {
@@ -52,10 +52,10 @@ class TeachingAssignmentController extends Controller
     }
     /**
      * disAssign teacher
-     * @param \App\Models\teaching_assignment $assignment
+     * @param \App\Models\TeachingAssignment $assignment
      * @return mixed|\Illuminate\Http\JsonResponse
      */
-    public function deleteAssignment(Teaching_assignment $assignment)
+    public function deleteAssignment(TeachingAssignment $assignment)
     {
         $assignment->load(['subject', 'classroom', 'teacher']);
 

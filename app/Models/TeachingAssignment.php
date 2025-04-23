@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class teaching_assignment extends Model
+class TeachingAssignment extends Model
 {
     protected $fillable = [
         'class_id',

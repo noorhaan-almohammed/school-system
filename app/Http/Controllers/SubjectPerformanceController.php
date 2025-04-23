@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SubjectPerformance\CreateSubjectPerformanceRequest;
+use App\Http\Requests\SubjectPerformance\UpdateSubjectPerformanceRequest;
 use App\Models\User;
 use App\Models\Subject;
 use Illuminate\Http\Request;
@@ -17,49 +19,75 @@ class SubjectPerformanceController extends Controller
         $this->subjectPerformanceService = $subjectPerformanceService;
     }
     /**
-     * Display a listing of the resource.
+     * Display a paginated list of subject performances
+     * @return mixed|\Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        $subjectsPerformace = SubjectPerformance::paginate(10);
+        return response()->json($subjectsPerformace);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new subject performance record
+     * @param \App\Http\Requests\SubjectPerformance\CreateSubjectPerformanceRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateSubjectPerformanceRequest $request)
     {
-        //
+        $data = $request->validated();
+        $msg = $this->subjectPerformanceService->createSubjectPerformance($data);
+        return redirect()->back()->with('status',$msg);
     }
 
     /**
-     * Display the specified resource.
+     * Show a single subject performance record by ID
+     * @param string $id
+     * @return mixed|\Illuminate\Http\JsonResponse
      */
-    public function show(SubjectPerformance $subjectPerformance)
+    public function show(string $id)
     {
-        //
+        $subjectPerformace = SubjectPerformance::findOrFail($id);
+        return response()->json($subjectPerformace);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update an existing subject performance record
+     * @param \App\Http\Requests\SubjectPerformance\UpdateSubjectPerformanceRequest $request
+     * @param string $id
+     * @return string
      */
-    public function update(Request $request, SubjectPerformance $subjectPerformance)
+    public function update(UpdateSubjectPerformanceRequest $request, string $id)
     {
-        //
+        $data = $request->validated();
+        return $this->subjectPerformanceService->updateSubjectPerformance($data , $id);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * SDelete a subject performance record
+     * @param string $id
+     * @return string
      */
-    public function destroy(SubjectPerformance $subjectPerformance)
+    public function destroy(string $id)
     {
-        //
+        return $this->subjectPerformanceService->deleteSubjectPerformance($id);
     }
+    /**
+     * Get a student's performance in a specific subject
+     * @param \App\Models\User $student
+     * @param \App\Models\Subject $subject
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showPerformanceForSubject(User $student,Subject $subject)
     {
         $SubjectPerformance = $this->subjectPerformanceService->showPerformanceForSubject($student,$subject);
         return self::success(new SubjectPerformanceResource($SubjectPerformance), 'Stuent Performance Retrieved Successfully',200);
     }
+    /**
+     * Get a student's performance across all subjects
+     * @param \App\Models\User $student
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function showPerformanceForAllSubjects(User $student)
     {
         $SubjectPerformance = $this->subjectPerformanceService->showPerformanceForAllSubjects($student);
