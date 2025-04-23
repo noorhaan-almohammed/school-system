@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\Auth\UserService;
+use App\Http\Resources\UserResource;
 use App\Http\Requests\Auth\UpdateUser;
 use App\Http\Requests\Auth\RegisterRequest;
 
@@ -45,12 +46,27 @@ class UserController extends Controller
      */
     public function updateUser(UpdateUser $request, $id)
     {
-       $data = $request->validated();
-       return $this->UserService->updateUser($data,$id);
+    $data = $request->validated();
+    return $this->UserService->updateUser($data,$id);
     }
 
     public function deleteUser($id)
     {
         return $this->UserService->deleteUser($id);
+    }
+    public function allStudents()
+    {
+        $students = $this->UserService->allStudents();
+        return self::paginated($students, UserResource::class, 'Students retrieved successfully', 200);
+    }
+    public function allParents()
+    {
+        $parents = $this->UserService->allParents();
+        return self::paginated($parents, UserResource::class, 'Parents retrieved successfully', 200);
+    }
+    public function allTeacher()
+    {
+        $teachers = $this->UserService->allTeachers();
+        return self::paginated($teachers, UserResource::class, 'Teachers retrieved successfully', 200);
     }
 }
