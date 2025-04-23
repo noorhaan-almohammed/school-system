@@ -20,8 +20,9 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
-    }
+            $events = $this->EventService->getEvents();
+            return self::paginated($events, EventResource::class, 'Events retrieved successfully', 200);
+        }
 
     /**
      * Store a newly created resource in storage.

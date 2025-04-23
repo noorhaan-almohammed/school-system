@@ -28,7 +28,7 @@ class MessageRequest extends FormRequest
                 'content' => ['required', 'string'],
         ];
     }
-     /**
+    /**
      * Define human-readable attribute names for validation errors.
      *
      * @return array<string, string>
@@ -41,7 +41,7 @@ class MessageRequest extends FormRequest
 
         ];
     }
-      /**
+    /**
      * Define custom error messages for validation failures.
      *
      * @return array<string, string>
@@ -54,7 +54,7 @@ class MessageRequest extends FormRequest
             'string' => 'The :attribute must be a valid string.',
         ];
     }
-       /**
+    /**
      * Handle validation errors and throw an exception.
      *
      * @param \Illuminate\Contracts\Validation\Validator $validator The validation instance.

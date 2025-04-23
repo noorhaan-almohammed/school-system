@@ -67,4 +67,16 @@ class UserService{
         $user->delete();
         return response()->json(['message' => 'تم حذف '.$user->name.' بنجاح']);
     }
+
+    public function allStudents(){
+        return User::role('student')->paginate(10);
+        }
+
+    public function allParents(){
+            return User::role('parent')->paginate(10);
+        }
+
+    public function allTeachers(){
+        return User::role('teacher')->paginate(10);
+    }
 }
