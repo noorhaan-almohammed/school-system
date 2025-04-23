@@ -98,7 +98,7 @@ class User extends Authenticatable
 
     public function teachingAssignments()
     {
-        return $this->hasMany(Teaching_assignment::class, 'teacher_id');
+        return $this->hasMany(TeachingAssignment::class, 'teacher_id');
     }
     public function getPerformanceForSubject($subject)
     {

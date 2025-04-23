@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Subject;
 use App\Models\Classroom;
 use Illuminate\Database\Seeder;
-use App\Models\teaching_assignment;
+use App\Models\TeachingAssignment;
 
 class TeachingAssignmentSeeder extends Seeder
 {
@@ -31,7 +31,7 @@ class TeachingAssignmentSeeder extends Seeder
         ];
 
         foreach ($assignments as [$class_id, $subject_id, $teacher_id]) {
-            teaching_assignment::create([
+            TeachingAssignment::create([
                 'class_id'   => $class_id,
                 'subject_id' => $subject_id,
                 'teacher_id' => $teacher_id,

@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Models\SubjectPerformance;
-use App\Models\teaching_assignment;
+use App\Models\TeachingAssignment;
 
 class SubjectPerformenceSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class SubjectPerformenceSeeder extends Seeder
      */
     public function run(): void
     {
-        $assignments = teaching_assignment::all();
+        $assignments = TeachingAssignment::all();
         $students = User::role('student')->get();
 
         foreach ($students as $student) {
