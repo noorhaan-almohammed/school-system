@@ -42,6 +42,26 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.error(error);
                     });
             }
+            if (modalType == "parent") {
+                const userId = row.getAttribute("data-id");
+                fetch(`/users/${userId}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById("edit-parent-id").value =
+                            data.id;
+                        document.getElementById("edit-parent-name").value =
+                            data.name;
+                        document.getElementById("edit-parent-email").value =
+                            data.email;
+                        document.getElementById("edit-parent-phone").value =
+                            data.phone_number || "";
+                        toggleEditModal("editParent");
+                    })
+                    .catch((error) => {
+                        alert("حدث خطأ أثناء جلب بيانات ولي الأمر");
+                        console.error(error);
+                    });
+            }
             if (modalType == "subject") {
                 const subjectId = row.getAttribute("data-id");
                 fetch(`/subject/${subjectId}`)
@@ -166,6 +186,58 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 alert("تم تحديث بيانات المادة بنجاح");
+            })
+            .catch(async (error) => {
+                if (error.status === 422) {
+                    const res = await error.json();
+                    alert(Object.values(res.errors).join("\n"));
+                } else {
+                    alert("حدث خطأ أثناء التحديث");
+                    console.error(error);
+                }
+            });
+    });
+
+    // تحديث بيانات ولي الأمر عند حفظ التعديلات
+    const editParenttForm = document.getElementById("edit-parent-form");
+    editParenttForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const id = document.getElementById("edit-parent-id").value;
+        const formData = new FormData(this);
+
+        fetch(`/users/${id}`, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]'
+                ).content,
+                Accept: "application/json",
+            },
+            body: formData,
+        })
+            .then((response) => {
+                if (!response.ok) throw response;
+                return response.json();
+            })
+            .then((data) => {
+                // تحديث البيانات في السطر مباشرة
+                const parentRow = document.querySelector(`tr[data-id="${id}"]`);
+                if (parentRow) {
+                    parentRow.querySelector("td:nth-child(2)").textContent =
+                        data.name;
+                    parentRow.querySelector("td:nth-child(5)").textContent =
+                        data.email;
+                    parentRow.querySelector("td:nth-child(4)").textContent =
+                        data.phone_number || "";
+
+                    // إغلاق المودال
+                    const modal = document.getElementById("edit-parent-modal");
+                    modal.setAttribute("aria-hidden", "true");
+                    modal.style.display = "none";
+                }
+
+                alert("تم تحديث بيانات ولي الأمر بنجاح");
             })
             .catch(async (error) => {
                 if (error.status === 422) {

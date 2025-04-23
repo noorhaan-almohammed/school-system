@@ -5,26 +5,18 @@
             <button class="close-modal">&times;</button>
         </div>
         <form id="edit-parent-form">
-            <input type="hidden" id="edit-parent-id">
+            <input type="hidden" id="edit-parent-id" name="id">
             <div class="form-group">
                 <label for="edit-parent-name">اسم ولي الأمر</label>
-                <input type="text" id="edit-parent-name" placeholder="أدخل الاسم الكامل" required>
+                <input type="text" id="edit-parent-name" name="name" placeholder="أدخل الاسم الكامل" required>
             </div>
             <div class="form-group">
                 <label for="edit-parent-email">البريد الإلكتروني</label>
-                <input type="email" id="edit-parent-email" placeholder="أدخل البريد الإلكتروني" required>
+                <input type="email" id="edit-parent-email" name="email" placeholder="أدخل البريد الإلكتروني" required>
             </div>
             <div class="form-group">
                 <label for="edit-parent-phone">رقم الهاتف</label>
-                <input type="tel" id="edit-parent-phone" placeholder="أدخل رقم الهاتف" required>
-            </div>
-            <div class="form-group">
-                <label for="edit-parent-relation">صلة القرابة</label>
-                <select id="edit-parent-relation" required>
-                    <option value="father">الأب</option>
-                    <option value="mother">الأم</option>
-                    <option value="guardian">الوصي</option>
-                </select>
+                <input type="tel" id="edit-parent-phone" name="phone_number" placeholder="أدخل رقم الهاتف" required>
             </div>
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary close-modal">إلغاء</button>

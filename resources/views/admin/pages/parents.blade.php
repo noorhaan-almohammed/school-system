@@ -11,26 +11,42 @@
                 <tr>
                     <th>رقم ولي الأمر</th>
                     <th>اسم ولي الأمر</th>
-                    <th>صلة القرابة</th>
-                    <th>عدد الأبناء</th>
+                    <th>الأبناء</th>
                     <th>رقم الهاتف</th>
+                    <th>البريد الالكتروني</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    {{-- <tr data-modal="parent" data-id="{{ $parent->id }}"> --}}
-                    <td>P1001</td>
-                    <td>أحمد محمد</td>
-                    <td>أب</td>
-                    <td>2</td>
-                    <td>0555123456</td>
-                    <td>
-                        <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
-                        <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
-                    </td>
-                </tr>
+                @php
+                    use App\Models\User;
+
+                    $parents = User::role('parent')
+                        ->with(['children'])
+                        ->get();
+                @endphp
+                @foreach ($parents as $parent)
+                    <tr data-modal="parent" data-id="{{ $parent->id }}">
+                        <td>{{ 'P' . str_pad($parent->id, 4, '0', STR_PAD_LEFT) }}</td>
+                        <td>{{ $parent->name }}</td>
+                            <td>
+                                @foreach ($parent->children as $child)
+                                    <div data-child-id="{{ $child->id }}" class="assignment">
+                                        {{ $child->name ?? '—' }}
+                                        {{-- <button class="delete-assignment" data-id="{{ $assignment->id }}">🗑️</button> --}}
+                                    </div>
+                                @endforeach
+                            </td>
+                            <td>{{ $parent->phone_number }}</td>
+                            <td>{{ $parent->email }}</td>
+                            <td>
+                                <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                            </td>
+                    </tr>
+                @endforeach
+
             </tbody>
         </table>
 
