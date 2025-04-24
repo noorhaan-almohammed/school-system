@@ -53,13 +53,13 @@ class UserService{
         $user = User::findOrFail($id);
 
         $user->update($data);
-
+        $user::with('classroom');
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
             'phone_number' => $user->phone_number,
-            'class_id' => $user->class_id
+            'class' => $user->classroom->name ?? null
         ]);
     }
 

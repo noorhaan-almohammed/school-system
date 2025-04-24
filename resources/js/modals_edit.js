@@ -42,6 +42,28 @@ document.addEventListener("DOMContentLoaded", function () {
                         console.error(error);
                     });
             }
+            if (modalType == "student") {
+                const userId = row.getAttribute("data-id");
+                fetch(`/users/${userId}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        document.getElementById("edit-student-id").value =
+                            data.id;
+                        document.getElementById("edit-student-name").value =
+                            data.name;
+                        document.getElementById("edit-student-email").value =
+                            data.email;
+                        document.getElementById("edit-student-phone").value =
+                            data.phone_number || "";
+                        document.getElementById("edit-student-class").value =
+                            data.class_id;
+                        toggleEditModal("editStudent");
+                    })
+                    .catch((error) => {
+                        alert("حدث خطأ أثناء جلب بيانات الطالب");
+                        console.error(error);
+                    });
+            }
             if (modalType == "parent") {
                 const userId = row.getAttribute("data-id");
                 fetch(`/users/${userId}`)
@@ -199,8 +221,60 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // تحديث بيانات ولي الأمر عند حفظ التعديلات
-    const editParenttForm = document.getElementById("edit-parent-form");
-    editParenttForm.addEventListener("submit", function (e) {
+    const editStudentForm = document.getElementById("edit-student-form");
+    editStudentForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const id = document.getElementById("edit-student-id").value;
+        const formData = new FormData(this);
+
+        fetch(`/users/${id}`, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]'
+                ).content,
+                Accept: "application/json",
+            },
+            body: formData,
+        })
+            .then((response) => {
+                if (!response.ok) throw response;
+                return response.json();
+            })
+            .then((data) => {
+                // تحديث البيانات في السطر مباشرة
+                const studenttRow = document.querySelector(`tr[data-id="${id}"]`);
+                if (studenttRow) {
+                    studenttRow.querySelector("td:nth-child(2)").textContent =
+                        data.name;
+                    studenttRow.querySelector("td:nth-child(3)").textContent =
+                        data.email;
+                    studenttRow.querySelector("td:nth-child(4)").textContent =
+                        data.phone_number || "";
+                    studenttRow.querySelector("td:nth-child(5)").textContent =
+                        data.class;
+                    // إغلاق المودال
+                    const modal = document.getElementById("edit-student-modal");
+                    modal.setAttribute("aria-hidden", "true");
+                    modal.style.display = "none";
+                }
+
+                alert("تم تحديث بيانات الطالب بنجاح");
+            })
+            .catch(async (error) => {
+                if (error.status === 422) {
+                    const res = await error.json();
+                    alert(Object.values(res.errors).join("\n"));
+                } else {
+                    alert("حدث خطأ أثناء التحديث");
+                    console.error(error);
+                }
+            });
+    });
+    // تحديث بيانات ولي الأمر عند حفظ التعديلات
+    const editParentForm = document.getElementById("edit-parent-form");
+    editParentForm.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const id = document.getElementById("edit-parent-id").value;
