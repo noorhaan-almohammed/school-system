@@ -33,7 +33,7 @@ class UpdateUser extends FormRequest
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users', 'email')->ignore($this->route('id')), 
+                Rule::unique('users', 'email')->ignore($this->route('id')),
             ],
             'phone_number' => [
                 'nullable',
@@ -41,6 +41,7 @@ class UpdateUser extends FormRequest
                 'max:20',
                 Rule::unique('users', 'phone_number')->ignore($this->route('id')),
             ],
+            'class_id' => 'nullable|exists:classrooms,id'
         ];
     }
 

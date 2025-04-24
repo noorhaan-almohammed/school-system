@@ -59,6 +59,7 @@ class UserService{
             'name' => $user->name,
             'email' => $user->email,
             'phone_number' => $user->phone_number,
+            'class_id' => $user->class_id
         ]);
     }
 

@@ -10,30 +10,37 @@
             <thead>
                 <tr>
                     <th>رقم الطالب</th>
-                    <th>الصورة</th>
                     <th>اسم الطالب</th>
+                    <th>البريد الالكتروني</th>
+                    <th>رقم الهاتف</th>
                     <th>الصف</th>
                     <th>ولي الأمر</th>
-                    <th>الحالة</th>
                     <th>الإجراءات</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                {{-- <tr data-modal="student" data-id="{{ $student->id }}"> --}}
-                    <td>1001</td>
-                    <td><img src="https://via.placeholder.com/40" alt="صورة الطالب" class="user-avatar">
+                @php
+                    $students = \App\Models\User::role('student')->with(['parents','classRoom'])->get();
+                @endphp
+                @foreach ($students as $student)
+                <tr data-modal="student" data-id="{{ $student->id }}">
+                    <td>{{ 'S' . str_pad($student->id, 4, '0', STR_PAD_LEFT) }}</td>
+                    <td>{{ $student->name }}</td>
+                    <td>{{ $student->email }}</td>
+                    <td>{{ $student->phone_number ?? '—' }}</td>
+                    <td>{{ $student->classRoom->name }}</td>
+                    <td>
+                        @foreach ($student->parents as $parent)
+                            <div>{{ $parent->name }}</div>
+                        @endforeach
                     </td>
-                    <td>محمد أحمد</td>
-                    <td>الصف الأول أ</td>
-                    <td>أحمد محمد</td>
-                    <td><span class="status-badge active">نشط</span></td>
                     <td>
                         <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
                         <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                        <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                        <button class="action-btn delete-btn"  data-id="{{ $student->id }}"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
 
