@@ -31,18 +31,18 @@
                         <td>{{ $parent->name }}</td>
                             <td>
                                 @foreach ($parent->children as $child)
-                                    <div data-child-id="{{ $child->id }}" class="assignment">
+                                    <div data-child-id="{{ $child->id }}" class="child">
                                         {{ $child->name ?? '—' }}
-                                        {{-- <button class="delete-assignment" data-id="{{ $assignment->id }}">🗑️</button> --}}
+                                        <button class="delete-child" data-id="{{ $child->pivot->id }}">🗑️</button>
                                     </div>
                                 @endforeach
                             </td>
                             <td>{{ $parent->phone_number }}</td>
                             <td>{{ $parent->email }}</td>
                             <td>
-                                <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn view-add-btn"><i class="fas fa-plus">إضافة طالب</i></button>
                                 <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+                                <button class="action-btn delete-btn" data-id={{ $parent->id }}><i class="fas fa-trash"></i></button>
                             </td>
                     </tr>
                 @endforeach

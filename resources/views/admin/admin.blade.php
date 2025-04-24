@@ -66,12 +66,14 @@
     <!-- نموذج تعديل مدرس -->
     @include('admin.modals.edit-teacher')
 
+    <!-- مودال إسناد طالب لولي أمر -->
+    @include('admin.modals.assign-child')
     <!-- نموذج تعديل ولي أمر -->
     @include('admin.modals.edit-parent')
     <!-- نموذج تعديل مادة دراسية -->
     @include('admin.modals.edit-subject')
 
-    @vite(['resources/js/modals_core.js', 'resources/js/modals_edit.js', 'resources/js/assign_subject.js'])
+    @vite(['resources/js/modals_core.js', 'resources/js/modals_edit.js', 'resources/js/assign_subject.js', 'resources/js/assign_child.js'])
 
 </body>
 

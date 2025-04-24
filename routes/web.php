@@ -4,9 +4,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ParentStudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeachingAssignmentController;
-
+use App\Models\ParentStudent;
 
 Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -29,3 +30,6 @@ Route::post('/subject/{id}', [SubjectController::class, 'update']);
 //event
 Route::post('/createEvent', [EventController::class, 'createEvent'])->name('createEvent');
 
+//parent student
+Route::post('/parent/{parent}/assign-child', [ParentStudentController::class, 'assignChild']);
+Route::delete('/children/{assignment}', [ParentStudentController::class, 'deleteChild']);

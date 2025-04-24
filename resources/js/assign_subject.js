@@ -208,12 +208,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch(() => showAlert("error", "حدث خطأ أثناء الحذف"));
         }
-        // delete teacher
-        if (e.target.classList.contains("delete-btn")) {
-            const id = e.target.dataset.id;
-            const confirmed = confirm("هل أنت متأكد من حذف هذا المدرس");
+        // delete
+        const deleteMessages = {
+            "teachers-page": "هل أنت متأكد من حذف هذا المدرس؟",
+            "parents-page": "هل أنت متأكد من حذف هذا ولي الأمر؟",
+            "students-page": "هل أنت متأكد من حذف هذا الطالب؟",
+            "subjects-page": "هل أنت متأكد من حذف هذه المادة؟",
+            "events-page": "هل أنت متأكد من حذف هذا الحدث؟",
+        };
 
+        if (e.target.classList.contains("delete-btn")) {
+            const visiblePageId = Object.keys(deleteMessages).find(id => {
+                const el = document.getElementById(id);
+                return el && window.getComputedStyle(el).display !== "none";
+            });
+
+            const id = e.target.dataset.id;
+            const message = deleteMessages[visiblePageId] || "هل أنت متأكد من الحذف؟";
+
+            const confirmed = confirm(message);
             if (!confirmed) return;
+
 
             fetch(`/users/${id}`, {
                 method: "DELETE",

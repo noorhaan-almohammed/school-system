@@ -556,7 +556,7 @@ body {
     color: white;
 }
 
-.view-btn {
+.view-btn ,.view-add-btn{
     background-color: var(--primary-color);
     color: white;
 }
@@ -769,13 +769,13 @@ a.logout-btn:hover{
     color: white;
     box-shadow: 1px 1px 10px black;
 }
-.assignment{
+.assignment , .child{
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 8px;
 }
-.delete-assignment{
+.delete-assignment , .delete-child{
     border: none;
      background: transparent;
       cursor: pointer;

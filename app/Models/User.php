@@ -75,13 +75,16 @@ class User extends Authenticatable
         return $this->hasOne(OverallPerformances::class ,'student_id');
     }
     // Get the parents associated with a student.
-    public function parents(){
-        return $this->belongsToMany(User::class, 'parent_students', 'student_id', 'parent_id');
+    public function parents() {
+        return $this->belongsToMany(User::class, 'parent_students', 'student_id', 'parent_id')
+                    ->withPivot('id');
     }
-    // Get the children associated with a parent.
-    public function children(){
-        return $this->belongsToMany(User::class, 'parent_students', 'parent_id', 'student_id');
+
+    public function children() {
+        return $this->belongsToMany(User::class, 'parent_students', 'parent_id', 'student_id')
+                    ->withPivot('id');
     }
+
     // Get the payment records associated with the student.
     public function payments(){
         return $this->hasMany(payment::class , 'student_id');

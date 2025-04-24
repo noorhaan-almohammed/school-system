@@ -45,7 +45,7 @@
                         </div>
                         <p class="event-description">اجتماع دوري مع أولياء الأمور لمناقشة تقدم الطلاب</p>
                         <div class="event-actions">
-                            <button class="btn btn-sm btn-delete"><i class="fas fa-trash"></i>
+                            <button class="btn btn-sm btn-delete delete-btn"><i class="fas fa-trash"></i>
                                 حذف</button>
                         </div>
                     </div>
