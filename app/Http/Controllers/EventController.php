@@ -6,7 +6,6 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Services\EventService;
 use App\Http\Requests\EventRequest;
-use App\Http\Resources\EventResource;
 
 class EventController extends Controller
 {
@@ -58,6 +57,6 @@ class EventController extends Controller
     public function destroy(string $id)
     {
         $msg = $this->EventService->deleteEvent($id);
-        return redirect()->back()->with('status',$msg);
+        return response()->json(['message' => $msg]);
     }
 }

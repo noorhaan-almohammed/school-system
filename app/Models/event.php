@@ -16,11 +16,11 @@ class Event extends Model
     protected  $casts = [
         'date'=>'date',
         'duration'=>'integer',
-        'time' => 'datetime:H:i',
     ];
 
     public function getTimeAttribute($value)
-{
-    return \Carbon\Carbon::createFromFormat('H:i', $value);
-}
+    {
+        return \Carbon\Carbon::parse($value);
+    }
+
 }

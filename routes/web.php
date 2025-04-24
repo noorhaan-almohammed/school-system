@@ -7,6 +7,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ParentStudentController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeachingAssignmentController;
+use App\Models\Event;
 use App\Models\ParentStudent;
 
 Auth::routes();
@@ -29,7 +30,7 @@ Route::post('/subject/{id}', [SubjectController::class, 'update']);
 
 //event
 Route::post('/createEvent', [EventController::class, 'createEvent'])->name('createEvent');
-
+Route::delete('/event/{id}', [EventController::class, 'destroy']);
 //parent student
 Route::post('/parent/{parent}/assign-child', [ParentStudentController::class, 'assignChild']);
 Route::delete('/children/{assignment}', [ParentStudentController::class, 'deleteChild']);

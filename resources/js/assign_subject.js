@@ -228,9 +228,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const confirmed = confirm(message);
             if (!confirmed) return;
+            const path = visiblePageId === "events-page" ? `/event/${id}` : `/users/${id}`;
 
-
-            fetch(`/users/${id}`, {
+            fetch(path, {
                 method: "DELETE",
                 headers: {
                     "X-CSRF-TOKEN": document
