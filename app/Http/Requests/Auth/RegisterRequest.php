@@ -20,6 +20,7 @@ class RegisterRequest extends FormRequest
          */
         $user = Auth::user();
         return Auth::check() && $user->hasRole('admin');
+        // return true;
     }
 
     /**

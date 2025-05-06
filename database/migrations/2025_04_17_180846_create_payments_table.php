@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
             $table->decimal('total_amount',10,2);
             $table->decimal('paid_amount',10 ,2);
-            $table->date('date');
             $table->timestamps();
         });
     }

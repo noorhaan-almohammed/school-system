@@ -43,7 +43,6 @@
             @include('admin.pages.events')
         </main>
     </div>
-
     <!-- النماذج المنبثقة -->
     <!-- نموذج إضافة طالب -->
     @include('admin.modals.add-student')

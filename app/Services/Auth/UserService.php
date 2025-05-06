@@ -6,48 +6,49 @@ use App\Models\ParentStudent;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 
-class UserService{
-    public function createUser(array $data)
+class UserService
 {
-    try {
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'phone_number' => $data['phone_number'],
-            'class_id' => $data['class_id'] ?? null,
-        ]);
-
-        $role = $data['role'];
-        $user->assignRole($role);
-
-        if ($role === 'student') {
-            isset($data['parent_id']) && ParentStudent::create([
-                'student_id' => $user->id,
-                'parent_id' => $data['parent_id'],
+    public function createUser(array $data)
+    {
+        try {
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'phone_number' => $data['phone_number'] ?? null,
+                'class_id' => $data['class_id'] ?? null,
             ]);
+
+            $role = $data['role'];
+            $user->assignRole($role);
+
+            if ($role === 'student') {
+                isset($data['parent_id']) && ParentStudent::create([
+                    'student_id' => $user->id,
+                    'parent_id' => $data['parent_id'],
+                ]);
+            }
+
+            $roleLabel = [
+                'teacher' => 'المدرس',
+                'student' => 'الطالب',
+                'parent' => 'ولي الأمر'
+            ];
+
+            $roleName = $roleLabel[$role] ?? 'المستخدم';
+            return "تم إنشاء $roleName بنجاح";
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            $roleLabel = [
+                'teacher' => 'المدرس',
+                'student' => 'الطالب',
+                'parent' => 'ولي الأمر'
+            ];
+            $roleName = $roleLabel[$data['role']] ?? 'المستخدم';
+            return "حدث خطأ أثناء إضافة $roleName";
         }
-
-        $roleLabel = [
-            'teacher' => 'المدرس',
-            'student' => 'الطالب',
-            'parent' => 'ولي الأمر'
-        ];
-
-        $roleName = $roleLabel[$role] ?? 'المستخدم';
-        return "تم إنشاء $roleName بنجاح";
-
-    } catch (\Exception $e) {
-        Log::error($e);
-        $roleLabel = [
-            'teacher' => 'المدرس',
-            'student' => 'الطالب',
-            'parent' => 'ولي الأمر'
-        ];
-        $roleName = $roleLabel[$data['role']] ?? 'المستخدم';
-        return "حدث خطأ أثناء إضافة $roleName";
     }
-}
     public function updateUser($data, $id)
     {
         $user = User::findOrFail($id);
@@ -63,21 +64,25 @@ class UserService{
         ]);
     }
 
-    public function deleteUser($id){
+    public function deleteUser($id)
+    {
         $user = User::findOrFail($id);
         $user->delete();
-        return response()->json(['message' => 'تم حذف '.$user->name.' بنجاح']);
+        return response()->json(['message' => 'تم حذف ' . $user->name . ' بنجاح']);
     }
 
-    public function allStudents(){
+    public function allStudents()
+    {
         return User::role('student')->paginate(10);
-        }
+    }
 
-    public function allParents(){
-            return User::role('parent')->paginate(10);
-        }
+    public function allParents()
+    {
+        return User::role('parent')->paginate(10);
+    }
 
-    public function allTeachers(){
+    public function allTeachers()
+    {
         return User::role('teacher')->paginate(10);
     }
 }
