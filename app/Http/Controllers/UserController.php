@@ -39,6 +39,36 @@ class UserController extends Controller
         return response()->json($user);
     }
     /**
+     * show user by $id
+     * @param mixed $id
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
+    public function showUserWithSubjectAndClass($id)
+    {
+        $user = User::with(['subjectPerformances.teachingAssignment.subject', 'subjectPerformances.teachingAssignment.classroom'])
+            ->findOrFail($id);
+
+        return response()->json(
+            [
+                'id' => $user->id,
+                'name' => $user->name,
+                'subject_performances' => $user->subjectPerformances->map(
+                    function ($performance) {
+                        return [
+                            'id' => $performance->id,
+                            'grade' => $performance->grade,
+                            'comment' => $performance->comment,
+                            'teaching_assignment_id' => $performance->teaching_assignment_id,
+                            'teaching_assignment' => [
+                                'subject' => $performance->teachingAssignment->subject->name ?? '',
+                                'classroom' => $performance->teachingAssignment->classroom->name ?? '',
+                                'id' => $performance->teachingAssignment->id,
+                            ]];
+                    })
+            ]);
+    }
+
+    /**
      * update user info
      * @param \Illuminate\Http\Request $request
      * @param mixed $id
@@ -46,8 +76,8 @@ class UserController extends Controller
      */
     public function updateUser(UpdateUser $request, $id)
     {
-    $data = $request->validated();
-    return $this->UserService->updateUser($data,$id);
+        $data = $request->validated();
+        return $this->UserService->updateUser($data, $id);
     }
 
     public function deleteUser($id)

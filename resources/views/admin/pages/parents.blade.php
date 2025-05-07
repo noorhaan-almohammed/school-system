@@ -40,7 +40,7 @@
                             <td>{{ $parent->phone_number }}</td>
                             <td>{{ $parent->email }}</td>
                             <td>
-                                <button class="action-btn view-add-btn"><i class="fas fa-plus">إضافة طالب</i></button>
+                                <button class="action-btn view-add-btn"><i class="fas fa-plus"></i>&nbsp;&nbsp; إضافة طالب </button>
                                 <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                                 <button class="action-btn delete-btn" data-id={{ $parent->id }}><i class="fas fa-trash"></i></button>
                             </td>

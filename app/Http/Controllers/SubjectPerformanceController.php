@@ -94,4 +94,24 @@ class SubjectPerformanceController extends Controller
         return self::success( SubjectPerformanceResource::collection($SubjectPerformance), 'Stuent Performance Retrieved Successfully',200);
     }
 
+    public function updateStudentGrades(Request $request)
+    {
+        $studentId = $request->input('id');
+        $grades = $request->input('grades');
+
+        foreach ($grades as $assignmentId => $values) {
+            SubjectPerformance::updateOrCreate(
+                [
+                    'student_id' => $studentId,
+                    'teaching_assignment_id' => $assignmentId,
+                ],
+                [
+                    'grade' => $values['grade'],
+                    'comment' => $values['comment'] ?? null,
+                ]
+            );
+        }
+
+        return response()->json(['message' => 'تم حفظ الدرجات بنجاح']);
+    }
 }

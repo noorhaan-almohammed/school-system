@@ -5,12 +5,29 @@
             <button class="add-new-btn" id="add-event-btn"><i class="fas fa-plus"></i> إضافة حدث
                 جديد</button>
         </div>
-
+        @php
+            use Carbon\Carbon;
+            $events = \App\Models\Event::get();
+            $months = [
+                1 => 'يناير',
+                2 => 'فبراير',
+                3 => 'مارس',
+                4 => 'أبريل',
+                5 => 'مايو',
+                6 => 'يونيو',
+                7 => 'يوليو',
+                8 => 'أغسطس',
+                9 => 'سبتمبر',
+                10 => 'أكتوبر',
+                11 => 'نوفمبر',
+                12 => 'ديسمبر',
+            ];
+        @endphp
         <div class="events-container">
             <div class="events-filters">
                 <div class="filter-group">
                     <label for="event-type">نوع الحدث:</label>
-                    <select id="event-type">
+                    <select id="event-type" class="filter-select">
                         <option value="all">الكل</option>
                         <option value="meeting">اجتماع</option>
                         <option value="exam">اختبار</option>
@@ -18,37 +35,27 @@
                         <option value="celebration">احتفال</option>
                     </select>
                 </div>
+
                 <div class="filter-group">
                     <label for="event-month">الشهر:</label>
-                    <select id="event-month">
+                    <select id="event-month" class="filter-select">
                         <option value="all">الكل</option>
-                        <option value="1">يناير</option>
-                        <option value="2">فبراير</option>
-                        <!-- باقي الأشهر -->
+                        @foreach ($months as $index => $month)
+                            <option value="{{ $index }}">{{ $month }}</option>
+                        @endforeach
                     </select>
                 </div>
-                <button class="btn btn-primary">تصفية</button>
+
+                <div class="filter-group">
+                    <button class="btn btn-filter" >
+                        <i class="fas fa-filter"></i> تصفية
+                    </button>
+                </div>
             </div>
 
+
             <div class="events-list">
-                @php
-                    use Carbon\Carbon;
-                    $events = \App\Models\Event::get();
-                    $months = [
-                        1 => 'يناير',
-                        2 => 'فبراير',
-                        3 => 'مارس',
-                        4 => 'أبريل',
-                        5 => 'مايو',
-                        6 => 'يونيو',
-                        7 => 'يوليو',
-                        8 => 'أغسطس',
-                        9 => 'سبتمبر',
-                        10 => 'أكتوبر',
-                        11 => 'نوفمبر',
-                        12 => 'ديسمبر',
-                    ];
-                @endphp
+
 
                 @foreach ($events as $event)
                     @php
@@ -58,7 +65,8 @@
                         $startTime = $event->time->format('h:i');
                         $endTime = $event->time->copy()->addHours($event->duration)->format('h:i');
                         $startAmPm = $event->time->format('A') === 'AM' ? 'صباحاً' : 'مساءً';
-                        $endAmPm =$event->time->copy()->addHours($event->duration)->format('A') === 'AM' ? 'صباحاً' : 'مساءً';
+                        $endAmPm =
+                            $event->time->copy()->addHours($event->duration)->format('A') === 'AM' ? 'صباحاً' : 'مساءً';
                     @endphp
 
                     <div class="event-card" data-id="{{ $event->id }}">

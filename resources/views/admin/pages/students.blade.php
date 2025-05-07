@@ -35,7 +35,7 @@
                         @endforeach
                     </td>
                     <td>
-                        <button class="action-btn view-btn"><i class="fas fa-eye"></i></button>
+                        <button class="action-btn grad-btn bg-green"><i class="fas fa-clipboard-list"></i></button>
                         <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                         <button class="action-btn delete-btn"  data-id="{{ $student->id }}"><i class="fas fa-trash"></i></button>
                     </td>

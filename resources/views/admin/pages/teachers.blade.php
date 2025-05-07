@@ -49,7 +49,7 @@
                         </td>
                         <td>{{ $teacher->phone_number ?? '—' }}</td>
                         <td>
-                            <button class="action-btn view-btn"><i class="fas fa-plus"> اسناد مادة</i></button>
+                            <button class="action-btn view-btn"><i class="fas fa-plus"></i> اسناد مادة</button>
                             <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                             <button class="action-btn delete-btn" data-id="{{ $teacher->id }}"><i class="fas fa-trash"></i></button>
                         </td>

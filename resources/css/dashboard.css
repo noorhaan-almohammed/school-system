@@ -442,7 +442,9 @@ body {
     background-color: var(--primary-color);
     color: white;
 }
-
+.grad-btn{
+    color: white;
+}
 .btn-secondary {
     background-color: #777;
     color: white;

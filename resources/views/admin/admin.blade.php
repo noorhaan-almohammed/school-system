@@ -72,7 +72,9 @@
     <!-- نموذج تعديل مادة دراسية -->
     @include('admin.modals.edit-subject')
 
-    @vite(['resources/js/modals_core.js', 'resources/js/modals_edit.js', 'resources/js/assign_subject.js', 'resources/js/assign_child.js'])
+    @include('admin.modals.add-grad-studunt')
+
+    @vite(['resources/js/modals_core.js', 'resources/js/modals_edit.js', 'resources/js/assign_subject.js', 'resources/js/assign_child.js','resources/js/add_grad.js'])
 
 </body>
 

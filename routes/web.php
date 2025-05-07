@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ParentStudentController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\SubjectPerformanceController;
 use App\Http\Controllers\TeachingAssignmentController;
 use App\Models\Event;
 use App\Models\ParentStudent;
@@ -16,6 +17,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 // user end points
 Route::post('/createUser', [UserController::class, 'createUser'])->name('createWebUser');
 Route::get('/users/{id}', [UserController::class, 'showUser']);
+Route::get('/users/{id}/subject/class', [UserController::class, 'showUserWithSubjectAndClass']);
 Route::post('/users/{id}', [UserController::class, 'updateUser']);
 Route::delete('/users/{id}',[UserController::class, 'deleteUser']);
 // teaching assignment end points
@@ -34,3 +36,6 @@ Route::delete('/event/{id}', [EventController::class, 'destroy']);
 //parent student
 Route::post('/parent/{parent}/assign-child', [ParentStudentController::class, 'assignChild']);
 Route::delete('/children/{assignment}', [ParentStudentController::class, 'deleteChild']);
+
+//performance
+Route::post('/student/grades/update', [SubjectPerformanceController::class, 'updateStudentGrades'])->name('student.grades.update');
