@@ -45,13 +45,14 @@ class UserController extends Controller
      */
     public function showUserWithSubjectAndClass($id)
     {
-        $user = User::with(['subjectPerformances.teachingAssignment.subject', 'subjectPerformances.teachingAssignment.classroom'])
+        $user = User::with(['subjectPerformances.teachingAssignment.subject','overallPerformance', 'subjectPerformances.teachingAssignment.classroom'])
             ->findOrFail($id);
 
         return response()->json(
             [
                 'id' => $user->id,
                 'name' => $user->name,
+                'overallPerformance' => $user->overallPerformance->performance,
                 'subject_performances' => $user->subjectPerformances->map(
                     function ($performance) {
                         return [

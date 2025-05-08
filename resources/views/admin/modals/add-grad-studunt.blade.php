@@ -32,7 +32,10 @@
                     </tbody>
                 </table>
             </div>
-
+            <div class="form-group" >
+                <label for="overallPerformance">المعدل المهائي</label>
+                <input type="text" id="overallPerformance" name="overallPerformance" readonly>
+            </div>
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary close-modal">إلغاء</button>
                 <button type="submit" class="btn btn-primary">حفظ</button>

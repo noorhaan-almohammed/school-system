@@ -17,23 +17,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     document.getElementById("add-grad-student-id").value = data.id;
                     document.getElementById("add-grad-student-name").value =
                         data.name;
-
+                    document.getElementById("overallPerformance").value = data.overallPerformance;
                     const tbody = document.querySelector("#grades-table tbody");
                     tbody.innerHTML = "";
 
                     data.subject_performances.forEach((performance) => {
-                        const subject = performance.teaching_assignment.subject; // "التربية الدينية"
+                        const subject = performance.teaching_assignment.subject;
                         const classroom =
-                            performance.teaching_assignment.classroom; // "الصف السادس"
-                        const grade = performance.grade || ""; // null => ''
-                        const comment = performance.comment || ""; // undefined => ''
-                        const taId = performance.teaching_assignment_id; // 6
+                            performance.teaching_assignment.classroom;
+                        const grade = performance.grade || "";
+                        const comment = performance.comment || "";
+                        const taId = performance.teaching_assignment_id;
 
                         const row = document.createElement("tr");
                         row.innerHTML = `
                         <td>${subject}</td>
                         <td>${classroom}</td>
-                        <td><input type="number" name="grades[${taId}][grade]" value="${grade}" min="0" max="100" required></td>
+                        <td><input type="float" name="grades[${taId}][grade]" value="${grade}" min="0" max="100" required></td>
                         <td><input type="text" name="grades[${taId}][comment]" value="${comment}" placeholder="ملاحظة (اختياري)"></td>
                     `;
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('overall_performances', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('users')->cascadeOnDelete();
-            $table->enum('performance',['bad','good','very good','excellent']);
+            $table->decimal('performance','5','2');
             $table->timestamps();
         });
     }
