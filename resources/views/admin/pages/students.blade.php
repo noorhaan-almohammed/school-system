@@ -5,7 +5,6 @@
             <button class="add-new-btn" id="add-student-btn"><i class="fas fa-plus"></i> إضافة طالب
                 جديد</button>
         </div>
-
         <table class="data-table">
             <thead>
                 <tr>
@@ -52,9 +51,11 @@
                         </td>
                         <td>
                             <button class="action-btn grad-btn bg-green"><i class="fas fa-clipboard-list"></i></button>
+                            @role('admin')
                             <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                             <button class="action-btn delete-btn" data-id="{{ $student->id }}"><i
                                     class="fas fa-trash"></i></button>
+                                    @endrole
                         </td>
                     </tr>
                 @endforeach
@@ -79,9 +80,12 @@
                         </td>
                         <td>
                             <button class="action-btn grad-btn bg-green"><i class="fas fa-clipboard-list"></i></button>
+                            @role('admin')
                             <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+
                             <button class="action-btn delete-btn" data-id="{{ $student->id }}"><i
                                     class="fas fa-trash"></i></button>
+                            @endrole
                         </td>
                     </tr>
                 @endrole

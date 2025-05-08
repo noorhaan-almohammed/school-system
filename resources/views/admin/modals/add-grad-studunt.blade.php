@@ -1,5 +1,3 @@
-<!-- resources/views/components/edit-grades-modal.blade.php -->
-
 <div id="edit-grad-student-modal" class="modal" aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
@@ -28,7 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- صفوف تُعبأ بجافاسكريبت -->
+
                     </tbody>
                 </table>
             </div>
@@ -37,8 +35,10 @@
                 <input type="text" id="overallPerformance" name="overallPerformance" readonly>
             </div>
             <div class="form-actions">
-                <button type="button" class="btn btn-secondary close-modal">إلغاء</button>
+                <button type="button" class="btn btn-secondary close-modal">إغلاق</button>
+                @role('teacher')
                 <button type="submit" class="btn btn-primary">حفظ</button>
+                @endrole
             </div>
         </form>
     </div>

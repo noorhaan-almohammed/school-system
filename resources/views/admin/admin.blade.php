@@ -36,7 +36,9 @@
             <!-- صفحة المدرسين -->
             @include('admin.pages.teachers')
             <!-- صفحة أولياء الأمور -->
+            @role('admin')
             @include('admin.pages.parents')
+            @endrole
             <!-- صفحة المواد الدراسية -->
             @include('admin.pages.subjects')
             <!-- صفحة الأحداث -->
@@ -45,6 +47,7 @@
     </div>
     <!-- النماذج المنبثقة -->
     <!-- نموذج إضافة طالب -->
+    @role('admin')
     @include('admin.modals.add-student')
 
     <!-- نموذج إضافة مدرس -->
@@ -71,7 +74,7 @@
     @include('admin.modals.edit-parent')
     <!-- نموذج تعديل مادة دراسية -->
     @include('admin.modals.edit-subject')
-
+    @endrole
     @include('admin.modals.add-grad-studunt')
 
     @vite(['resources/js/modals_core.js', 'resources/js/modals_edit.js', 'resources/js/assign_subject.js', 'resources/js/assign_child.js','resources/js/add_grad.js'])
