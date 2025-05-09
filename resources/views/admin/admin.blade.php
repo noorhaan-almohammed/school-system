@@ -57,6 +57,8 @@
             @include('admin.pages.subjects')
             <!-- صفحة الأحداث -->
             @include('admin.pages.events')
+
+            @include('admin.pages.attendence')
         </main>
     </div>
     <!-- النماذج المنبثقة -->

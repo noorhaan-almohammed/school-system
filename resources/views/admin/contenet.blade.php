@@ -68,7 +68,7 @@
     <!-- الأحداث القادمة -->
     <section class="upcoming-events">
         <h2 class="section-title"><i class="fas fa-calendar-alt"></i> الأحداث القادمة</h2>
-        <div class="events-container">0
+        <div class="events-container">
             <div class="event-list">
                 @foreach ($events as $event)
                     @php
@@ -109,7 +109,7 @@
     </section>
 
     <!-- الرسائل الجديدة -->
-    <section class="messages-section">
+    {{-- <section class="messages-section">
         <h2 class="section-title"><i class="fas fa-envelope"></i> الرسائل الجديدة</h2>
 
         <div class="message-item">
@@ -149,5 +149,5 @@
                 <button class="reply-btn">رد</button>
             </div>
         </div>
-    </section>
+    </section> --}}
 </div>

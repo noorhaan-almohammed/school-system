@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -39,3 +40,8 @@ Route::delete('/children/{assignment}', [ParentStudentController::class, 'delete
 
 //performance
 Route::post('/student/grades/update', [SubjectPerformanceController::class, 'updateStudentGrades'])->name('student.grades.update');
+
+//attedence
+Route::post('/attendances/toggle', [AttendanceController::class, 'toggle']);
+Route::get('/attendances/summary/{student}', [AttendanceController::class, 'summary']);
+

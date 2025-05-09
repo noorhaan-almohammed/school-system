@@ -53,6 +53,7 @@
                         </td>
                         <td>
                             <button class="action-btn grad-btn bg-green"><i class="fas fa-clipboard-list"></i></button>
+                            <button class="action-btn attendence" data-id="{{ $student->id }}"><i class="fas fa-user-check"></i></button>
                             @role('admin')
                             <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
                             <button class="action-btn delete-btn" data-id="{{ $student->id }}"><i
@@ -74,3 +75,68 @@
         </div>
     </div>
 </div>
+<!-- Overlay -->
+<div id="attendance-overlay"></div>
+
+<!-- Modal -->
+<div id="attendance-modal">
+
+    <h3>
+        <i class="fas fa-calendar-check" style="color:#2d89ef;"></i> تفاصيل الحضور
+    </h3>
+
+    <div id="attendance-info" style="font-size:16px; color:#444; line-height:1.6;">
+        جاري التحميل...
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="closeAttendanceModal()">
+            إغلاق
+        </button>
+    </div>
+</div>
+
+<script>
+    function openAttendanceModal(studentId) {
+        const modal = document.getElementById('attendance-modal');
+        const overlay = document.getElementById('attendance-overlay');
+        const infoBox = document.getElementById('attendance-info');
+
+        modal.style.display = 'flex';
+        overlay.style.display = 'block';
+        infoBox.innerHTML = 'جاري التحميل...';
+
+        fetch(`/attendances/summary/${studentId}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    infoBox.innerHTML = `
+                        <div> <label>عدد أيام <strong>الحضور</strong> :</label>
+                            <span>${data.presentDays}</span></div>
+                        <div> <label>عدد أيام <strong>الغياب</strong> :</label>
+                             <span> ${data.absentDays}</span></div>
+                        <div> </label> نسبة الحضور: <strong></label>
+                            <span>${data.attendanceRate}%</strong></span></div>
+                    `;
+                } else {
+                    infoBox.innerText = 'حدث خطأ في جلب البيانات';
+                }
+            })
+            .catch(() => {
+                infoBox.innerText = 'فشل الاتصال بالسيرفر';
+            });
+    }
+
+    function closeAttendanceModal() {
+        document.getElementById('attendance-modal').style.display = 'none';
+        document.getElementById('attendance-overlay').style.display = 'none';
+    }
+
+    document.querySelectorAll('.attendence').forEach(button => {
+        button.addEventListener('click', function () {
+            const studentId = this.getAttribute('data-id');
+            openAttendanceModal(studentId);
+        });
+    });
+</script>
+
