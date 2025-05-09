@@ -13,10 +13,12 @@
             @role('student')
             <li data-page="student"><a href="#"><i class="fas fa-users"></i> الطالب</a></li>
             @endrole
+            @role('admin')
             <li data-page="teachers"><a href="#"><i class="fas fa-chalkboard-teacher"></i> إدارة المدرسين</a></li>
             <li data-page="parents"><a href="#"><i class="fas fa-user-friends"></i> أولياء الأمور</a></li>
             <li data-page="subjects"><a href="#"><i class="fas fa-book"></i> المواد الدراسية</a></li>
             <li data-page="events"><a href="#"><i class="fas fa-calendar-plus"></i> الأحداث</a></li>
+            @endrole
             {{-- <li data-page="grades"><a href="#"><i class="fas fa-clipboard-list"></i> علامات الطلاب</a></li>
             <li data-page="attendance"><a href="#"><i class="fas fa-user-check"></i> الحضور</a></li> --}}
         </ul>

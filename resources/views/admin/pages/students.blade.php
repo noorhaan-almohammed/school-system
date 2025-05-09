@@ -2,8 +2,10 @@
     <div class="content-page">
         <div class="page-header">
             <h2 class="page-title"><i class="fas fa-users"></i> إدارة الطلاب</h2>
+            @role('admin')
             <button class="add-new-btn" id="add-student-btn"><i class="fas fa-plus"></i> إضافة طالب
                 جديد</button>
+            @endrole
         </div>
         <table class="data-table">
             <thead>
