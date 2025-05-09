@@ -1,3 +1,9 @@
+@php
+    $studentsCount = \App\Models\User::role('student')->count();
+    $teachersCount = \App\Models\User::role('teacher')->count();
+    $parentsCount = \App\Models\User::role('parent')->count();
+    $subjectsCount = \App\Models\Subject::count();
+@endphp
 <div id="dashboard-page" class="page-content active">
     <!-- بطاقات الإحصائيات -->
     <section class="stats-cards">
@@ -6,7 +12,7 @@
                 <i class="fas fa-users"></i>
             </div>
             <div class="card-info">
-                <h3>450</h3>
+                <h3>{{ $studentsCount }}</h3>
                 <p>الطلاب</p>
             </div>
         </div>
@@ -16,7 +22,7 @@
                 <i class="fas fa-chalkboard-teacher"></i>
             </div>
             <div class="card-info">
-                <h3>32</h3>
+                <h3>{{ $teachersCount }} </h3>
                 <p>المدرسين</p>
             </div>
         </div>
@@ -26,7 +32,7 @@
                 <i class="fas fa-user-friends"></i>
             </div>
             <div class="card-info">
-                <h3>420</h3>
+                <h3>{{ $parentsCount }}</h3>
                 <p>أولياء الأمور</p>
             </div>
         </div>
@@ -36,48 +42,70 @@
                 <i class="fas fa-book"></i>
             </div>
             <div class="card-info">
-                <h3>12</h3>
+                <h3>{{ $subjectsCount }}</h3>
                 <p>المواد الدراسية</p>
             </div>
         </div>
     </section>
-
+    @php
+        use Carbon\Carbon;
+        $events = \App\Models\Event::get();
+        $months = [
+            1 => 'يناير',
+            2 => 'فبراير',
+            3 => 'مارس',
+            4 => 'أبريل',
+            5 => 'مايو',
+            6 => 'يونيو',
+            7 => 'يوليو',
+            8 => 'أغسطس',
+            9 => 'سبتمبر',
+            10 => 'أكتوبر',
+            11 => 'نوفمبر',
+            12 => 'ديسمبر',
+        ];
+    @endphp
     <!-- الأحداث القادمة -->
     <section class="upcoming-events">
         <h2 class="section-title"><i class="fas fa-calendar-alt"></i> الأحداث القادمة</h2>
+        <div class="events-container">0
+            <div class="event-list">
+                @foreach ($events as $event)
+                    @php
+                        $eventDate = Carbon::parse($event->date);
+                        $day = $eventDate->format('d');
+                        $month = $months[(int) $eventDate->format('m')];
+                        $startTime = $event->time->format('h:i');
+                        $endTime = $event->time->copy()->addHours($event->duration)->format('h:i');
+                        $startAmPm = $event->time->format('A') === 'AM' ? 'صباحاً' : 'مساءً';
+                        $endAmPm =
+                            $event->time->copy()->addHours($event->duration)->format('A') === 'AM' ? 'صباحاً' : 'مساءً';
+                    @endphp
 
-        <div class="event-item">
-            <div class="event-date">
-                <div class="day">15</div>
-                <div class="month">مايو</div>
+                    <div class="event-card" data-id="{{ $event->id }}">
+                        <div class="event-date">
+                            <span class="day">{{ $day }}</span>
+                            <span class="month">{{ $month }}</span>
+                        </div>
+                        <div class="event-details">
+                            <h3 class="event-title">{{ $event->title }}</h3>
+                            <div class="event-meta">
+                                {{-- <span class="event-type"><i class="fas fa-file-alt"></i> اختبار</span> --}}
+                                <span class="event-time">
+                                    <i class="fas fa-clock"></i>
+                                    {{ $startTime }} {{ $startAmPm }} - {{ $endTime }} {{ $endAmPm }}
+                                </span>
+                            </div>
+                            <p class="event-description">{{ $event->description }}</p>
+                            <div class="event-actions">
+                                <button class="btn btn-sm delete-btn" data-id="{{ $event->id }}">
+                                    <i class="fas fa-trash"></i> حذف
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-            <div class="event-info">
-                <h3 class="event-title">اجتماع أولياء الأمور</h3>
-                <div class="event-time"><i class="fas fa-clock"></i> 03:00 مساءً - 05:00 مساءً</div>
-            </div>
-        </div>
-
-        <div class="event-item">
-            <div class="event-date">
-                <div class="day">20</div>
-                <div class="month">مايو</div>
-            </div>
-            <div class="event-info">
-                <h3 class="event-title">اختبار نهاية الفصل</h3>
-                <div class="event-time"><i class="fas fa-clock"></i> 08:00 صباحاً - 10:00 صباحاً</div>
-            </div>
-        </div>
-
-        <div class="event-item">
-            <div class="event-date">
-                <div class="day">25</div>
-                <div class="month">مايو</div>
-            </div>
-            <div class="event-info">
-                <h3 class="event-title">حفل نهاية العام</h3>
-                <div class="event-time"><i class="fas fa-clock"></i> 04:00 مساءً - 07:00 مساءً</div>
-            </div>
-        </div>
     </section>
 
     <!-- الرسائل الجديدة -->
