@@ -6,8 +6,13 @@
     <nav class="nav-menu">
         <ul>
             <li class="active" data-page="dashboard"><a href="#"><i class="fas fa-tachometer-alt"></i>
-                    لوحة التحكم</a></li>
+                    الرئيسية</a></li>
+                    @hasanyrole(['admin', 'teacher', 'parent'])
             <li data-page="students"><a href="#"><i class="fas fa-users"></i> الطلاب</a></li>
+            @endhasanyrole
+            @role('student')
+            <li data-page="student"><a href="#"><i class="fas fa-users"></i> الطالب</a></li>
+            @endrole
             <li data-page="teachers"><a href="#"><i class="fas fa-chalkboard-teacher"></i> إدارة المدرسين</a></li>
             <li data-page="parents"><a href="#"><i class="fas fa-user-friends"></i> أولياء الأمور</a></li>
             <li data-page="subjects"><a href="#"><i class="fas fa-book"></i> المواد الدراسية</a></li>

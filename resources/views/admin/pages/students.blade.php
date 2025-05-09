@@ -60,35 +60,6 @@
                     </tr>
                 @endforeach
 
-                @role('student')
-                    @php
-                        $student = auth()
-                            ->user()
-                            ->load(['parents', 'classRoom']);
-                    @endphp
-
-                    <tr data-modal="student" data-id="{{ $student->id }}">
-                        <td>{{ 'S' . str_pad($student->id, 4, '0', STR_PAD_LEFT) }}</td>
-                        <td>{{ $student->name }}</td>
-                        <td>{{ $student->email }}</td>
-                        <td>{{ $student->phone_number ?? '—' }}</td>
-                        <td>{{ $student->classRoom->name }}</td>
-                        <td>
-                            @foreach ($student->parents as $parent)
-                                <div>{{ $parent->name }}</div>
-                            @endforeach
-                        </td>
-                        <td>
-                            <button class="action-btn grad-btn bg-green"><i class="fas fa-clipboard-list"></i></button>
-                            @role('admin')
-                            <button class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
-
-                            <button class="action-btn delete-btn" data-id="{{ $student->id }}"><i
-                                    class="fas fa-trash"></i></button>
-                            @endrole
-                        </td>
-                    </tr>
-                @endrole
             </tbody>
         </table>
 

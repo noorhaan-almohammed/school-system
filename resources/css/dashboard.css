@@ -13,6 +13,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    list-style: none;
 }
 
 body {
@@ -781,4 +782,15 @@ a.logout-btn:hover{
     border: none;
      background: transparent;
       cursor: pointer;
+}
+.sub-title{
+    margin: 16px 0;
+    text-align: center;
+
+}
+.bg-performance{
+    background-color: #69ff27a1;
+    padding: 16px;
+text-align: center;
+font-size: 24px;
 }

@@ -32,7 +32,21 @@
             <!-- محتوى الصفحات -->
             @include('admin.contenet')
             <!-- صفحة الطلاب -->
+            @hasanyrole(['admin', 'teacher', 'parent'])
             @include('admin.pages.students')
+            @endrole
+            @role('student')
+            @php
+                 $student = Auth::user()->load([
+                    'subjectPerformances.teachingAssignment.subject',
+                    'subjectPerformances.teachingAssignment.classroom',
+                    'overallPerformance',
+                    'parents',
+                    'classRoom'
+                ]);
+            @endphp
+            @include('admin.pages.student')
+            @endrole
             <!-- صفحة المدرسين -->
             @include('admin.pages.teachers')
             <!-- صفحة أولياء الأمور -->

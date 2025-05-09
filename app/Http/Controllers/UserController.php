@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Services\Auth\UserService;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\UpdateUser;
 use App\Http\Requests\Auth\RegisterRequest;
 
@@ -45,7 +46,7 @@ class UserController extends Controller
      */
     public function showUserWithSubjectAndClass($id)
     {
-        $user = User::with(['subjectPerformances.teachingAssignment.subject','overallPerformance', 'subjectPerformances.teachingAssignment.classroom'])
+        $user = User::with(['subjectPerformances.teachingAssignment.subject', 'overallPerformance', 'subjectPerformances.teachingAssignment.classroom'])
             ->findOrFail($id);
 
         return response()->json(
@@ -64,9 +65,12 @@ class UserController extends Controller
                                 'subject' => $performance->teachingAssignment->subject->name ?? '',
                                 'classroom' => $performance->teachingAssignment->classroom->name ?? '',
                                 'id' => $performance->teachingAssignment->id,
-                            ]];
-                    })
-            ]);
+                            ]
+                        ];
+                    }
+                )
+            ]
+        );
     }
 
     /**
