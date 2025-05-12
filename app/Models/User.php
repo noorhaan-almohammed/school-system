@@ -65,17 +65,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Subject::class, 'teaching_assignments', 'teacher_id', 'subject_id');
     }
-    // Get the messages received by the user.
-    public function receivedMessages()
-    {
-        return $this->hasMany(message::class, 'Recieve_id');
-    }
-
-    // Get the messages sent by the user.
-    public function sentMessages()
-    {
-        return $this->hasMany(message::class, 'Sender_id');
-    }
     // Get the overall performance record for the student.
     public function overallPerformance()
     {
@@ -92,12 +81,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(User::class, 'parent_students', 'parent_id', 'student_id')
             ->withPivot('id');
-    }
-
-    // Get the payment records associated with the student.
-    public function payments()
-    {
-        return $this->hasMany(payment::class, 'student_id');
     }
     // Get the subject performance records for the student.
     public function subjectPerformances()

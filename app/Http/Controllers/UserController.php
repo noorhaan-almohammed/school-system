@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Services\Auth\UserService;
-use App\Http\Resources\UserResource;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Auth\UpdateUser;
 use App\Http\Requests\Auth\RegisterRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserController extends Controller
 {
@@ -30,48 +31,47 @@ class UserController extends Controller
         return redirect()->back()->with('success', $msg);
     }
     /**
+     * public information for any user
      * show user by $id
      * @param mixed $id
      * @return mixed|\Illuminate\Http\JsonResponse
      */
     public function showUser($id)
     {
-        $user = User::findOrFail($id);
-        return response()->json($user);
+        try{
+            $user = User::findOrFail($id);
+            return $this->success($user);
+        }catch(ModelNotFoundException){
+            return $this->error(null, "Not found",404 );
+        }catch(Exception){
+            return $this->error();
+        }
     }
     /**
-     * show user by $id
+     * student information
+     * show User With Subject And Class
      * @param mixed $id
      * @return mixed|\Illuminate\Http\JsonResponse
      */
     public function showUserWithSubjectAndClass($id)
     {
-        $user = User::with(['subjectPerformances.teachingAssignment.subject', 'overallPerformance', 'subjectPerformances.teachingAssignment.classroom'])
-            ->findOrFail($id);
-
-        return response()->json(
-            [
-                'id' => $user->id,
-                'name' => $user->name,
-                'overallPerformance' => $user->overallPerformance->performance,
-                'subject_performances' => $user->subjectPerformances->map(
-                    function ($performance) {
-                        return [
-                            'id' => $performance->id,
-                            'grade' => $performance->grade,
-                            'comment' => $performance->comment,
-                            'teaching_assignment_id' => $performance->teaching_assignment_id,
-                            'teaching_assignment' => [
-                                'subject' => $performance->teachingAssignment->subject->name ?? '',
-                                'classroom' => $performance->teachingAssignment->classroom->name ?? '',
-                                'id' => $performance->teachingAssignment->id,
-                            ]
-                        ];
-                    }
-                )
-            ]
-        );
+        return $this->UserService->showUserWithSubjectAndClass($id);
     }
+    /**
+     * Summary of showUserInfoBacedOnRole
+     * @param \GuzzleHttp\Psr7\Request $request
+     * @return void
+     */
+    public function showUserInfoBacedOnRole(Request $request){
+        /**
+         * @var User
+         */
+        $user = Auth::user();
+        $user_role = $user->getRoleNames()->first();
+        $userInfo = $this->UserService->showUserInfo($user_role,$user->id);
+        return $userInfo;
+    }
+
 
     /**
      * update user info
@@ -84,24 +84,13 @@ class UserController extends Controller
         $data = $request->validated();
         return $this->UserService->updateUser($data, $id);
     }
-
+    /**
+     * delete User
+     * @param mixed $id
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
     public function deleteUser($id)
     {
         return $this->UserService->deleteUser($id);
-    }
-    public function allStudents()
-    {
-        $students = $this->UserService->allStudents();
-        return self::paginated($students, UserResource::class, 'Students retrieved successfully', 200);
-    }
-    public function allParents()
-    {
-        $parents = $this->UserService->allParents();
-        return self::paginated($parents, UserResource::class, 'Parents retrieved successfully', 200);
-    }
-    public function allTeacher()
-    {
-        $teachers = $this->UserService->allTeachers();
-        return self::paginated($teachers, UserResource::class, 'Teachers retrieved successfully', 200);
     }
 }

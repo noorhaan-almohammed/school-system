@@ -14,17 +14,14 @@ class ParentStudentController extends Controller
             'child_id' => 'required|exists:users,id',
         ]);
 
-        // تأكد ما يكون الطالب مضاف مسبقًا
         if ($parent->children()->where('student_id', $request->child_id)->exists()) {
             return response()->json([
                 'message' => 'هذا الطالب مضاف بالفعل لهذا ولي الأمر.',
             ], 422);
         }
 
-        // عمل الإسناد
         $parent->children()->attach($request->child_id);
 
-        // الحصول على السطر من الجدول الوسيط
         $pivot = $parent->children()
             ->where('student_id', $request->child_id)
             ->first()
@@ -36,7 +33,7 @@ class ParentStudentController extends Controller
                 'id' => $request->child_id,
                 'name' => User::find($request->child_id)->name,
             ],
-            'assignment_id' => $pivot->id, // هذا هو المفتاح لحذف العلاقة لاحقًا
+            'assignment_id' => $pivot->id, 
         ]);
     }
 

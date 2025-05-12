@@ -15,4 +15,7 @@ class Attendance extends Model
     public function students(){
         return $this->hasMany(User::class, 'student_id');
     }
+    public function teachingAssignment(){
+        return $this->belongsTo(TeachingAssignment::class , 'teaching_assignment_id');
+    }
 }

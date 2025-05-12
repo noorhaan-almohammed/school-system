@@ -33,67 +33,68 @@
             @include('admin.contenet')
             <!-- صفحة الطلاب -->
             @hasanyrole(['admin', 'teacher', 'parent'])
-            @include('admin.pages.students')
+                @include('admin.pages.students')
             @endrole
             @role('student')
-            @php
-                 $student = Auth::user()->load([
-                    'subjectPerformances.teachingAssignment.subject',
-                    'subjectPerformances.teachingAssignment.classroom',
-                    'overallPerformance',
-                    'parents',
-                    'classRoom'
-                ]);
-            @endphp
-            @include('admin.pages.student')
+                @php
+                    $student = Auth::user()->load([
+                        'subjectPerformances.teachingAssignment.subject',
+                        'subjectPerformances.teachingAssignment.classroom',
+                        'overallPerformance',
+                        'parents',
+                        'classRoom',
+                    ]);
+                @endphp
+                @include('admin.pages.student')
             @endrole
             <!-- صفحة المدرسين -->
             @include('admin.pages.teachers')
             <!-- صفحة أولياء الأمور -->
             @role('admin')
-            @include('admin.pages.parents')
+                @include('admin.pages.parents')
             @endrole
             <!-- صفحة المواد الدراسية -->
             @include('admin.pages.subjects')
             <!-- صفحة الأحداث -->
             @include('admin.pages.events')
-
-            @include('admin.pages.attendence')
+            @hasanyrole(['admin', 'teacher', 'parent'])
+                @include('admin.pages.attendence')
+            @endhasanyrole
         </main>
     </div>
     <!-- النماذج المنبثقة -->
     <!-- نموذج إضافة طالب -->
     @role('admin')
-    @include('admin.modals.add-student')
+        @include('admin.modals.add-student')
 
-    <!-- نموذج إضافة مدرس -->
-    @include('admin.modals.add-teacher')
+        <!-- نموذج إضافة مدرس -->
+        @include('admin.modals.add-teacher')
 
-    @include('admin.modals.assign-class-subject')
-    <!-- نموذج إضافة ولي أمر -->
-    @include('admin.modals.add-parent')
+        @include('admin.modals.assign-class-subject')
+        <!-- نموذج إضافة ولي أمر -->
+        @include('admin.modals.add-parent')
 
-    <!-- نموذج إضافة مادة دراسية -->
-    @include('admin.modals.add-subject')
+        <!-- نموذج إضافة مادة دراسية -->
+        @include('admin.modals.add-subject')
 
-    <!-- نموذج إضافة حدث جديد -->
-    @include('admin.modals.add-event')
-    <!-- نماذج التعديل (تضاف بجانب نماذج الإضافة) -->
-    <!-- نموذج تعديل طالب -->
-    @include('admin.modals.edit-student')
-    <!-- نموذج تعديل مدرس -->
-    @include('admin.modals.edit-teacher')
+        <!-- نموذج إضافة حدث جديد -->
+        @include('admin.modals.add-event')
+        <!-- نماذج التعديل (تضاف بجانب نماذج الإضافة) -->
+        <!-- نموذج تعديل طالب -->
+        @include('admin.modals.edit-student')
+        <!-- نموذج تعديل مدرس -->
+        @include('admin.modals.edit-teacher')
 
-    <!-- مودال إسناد طالب لولي أمر -->
-    @include('admin.modals.assign-child')
-    <!-- نموذج تعديل ولي أمر -->
-    @include('admin.modals.edit-parent')
-    <!-- نموذج تعديل مادة دراسية -->
-    @include('admin.modals.edit-subject')
+        <!-- مودال إسناد طالب لولي أمر -->
+        @include('admin.modals.assign-child')
+        <!-- نموذج تعديل ولي أمر -->
+        @include('admin.modals.edit-parent')
+        <!-- نموذج تعديل مادة دراسية -->
+        @include('admin.modals.edit-subject')
     @endrole
     @include('admin.modals.add-grad-studunt')
 
-    @vite(['resources/js/modals_core.js', 'resources/js/modals_edit.js', 'resources/js/assign_subject.js', 'resources/js/assign_child.js','resources/js/add_grad.js'])
+    @vite(['resources/js/modals_core.js', 'resources/js/modals_edit.js', 'resources/js/assign_subject.js', 'resources/js/assign_child.js', 'resources/js/add_grad.js'])
 
 </body>
 

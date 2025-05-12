@@ -3,31 +3,10 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthService
 {
-    /**
-     * Register a new user.
-     *
-     * @param array $data
-     * @return array
-     */
-    public function register(array $data)
-    {
-        $data['password'] = Hash::make($data['password']);
-        $user = User::create($data);
-
-        // Generate token
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        return [
-            'user' => $user,
-            'token' => $token
-        ];
-    }
-
     /**
      * Login an existing user.
      *

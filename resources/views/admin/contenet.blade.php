@@ -98,9 +98,11 @@
                             </div>
                             <p class="event-description">{{ $event->description }}</p>
                             <div class="event-actions">
+                                @role('admin')
                                 <button class="btn btn-sm delete-btn" data-id="{{ $event->id }}">
                                     <i class="fas fa-trash"></i> حذف
                                 </button>
+                                @endrole
                             </div>
                         </div>
                     </div>

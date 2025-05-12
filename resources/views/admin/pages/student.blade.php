@@ -63,7 +63,7 @@
         </table>
         <h3 class="sub-title">الأداء العام</h3>
         <div class="bg-performance">
-            {{ $student->overallPerformance->performance }}%
+            {{ $student->overallPerformance->performance ?? 0 }}%
         </div>
     </div>
 </div>

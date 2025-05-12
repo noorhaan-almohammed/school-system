@@ -27,22 +27,6 @@ class AuthController extends Controller
         // Assign AuthService instance to the controller
         $this->authService = $authService;
     }
-
-    public function register(RegisterRequest $request)
-    {
-        // Use AuthService to handle registration logic
-        // The request data is filtered to include only necessary fields
-        $result = $this->authService->register($request->only('name', 'email', 'password'));
-
-        // Return a success response with user details and authentication token
-        return $this->success(
-            [
-                'user' => $result['user'],
-                'token' => $result['token']
-            ],
-            'User registered successfully'
-        );
-    }
     public function login(LoginRequest $request)
     {
         // Use AuthService to handle login logic
@@ -66,16 +50,6 @@ class AuthController extends Controller
 
     /**
      * Logout the authenticated user.
-     *
-     * @OA\Post(
-     *     path="/api/auth/logout",
-     *     tags={"Auth"},
-     *     summary="Logout the authenticated user",
-     *     description="Revokes the user's token and logs them out",
-     *     security={{"Bearer":{}}},
-     *     @OA\Response(response=200, description="User logged out successfully"),
-     *     @OA\Response(response=401, description="Unauthenticated")
-     * )
      *
      * @return \Illuminate\Http\JsonResponse JSON response confirming successful logout
      */
