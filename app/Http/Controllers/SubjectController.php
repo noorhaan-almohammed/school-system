@@ -20,7 +20,7 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::with(['teachers:name,email,phone_number','classes:name'])->paginate(5);
+        $subjects = Subject::with(['teachers:name,email,phone_number','classes:name'])->get();
         return $this->success($subjects);
     }
 

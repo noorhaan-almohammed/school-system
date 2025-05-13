@@ -101,10 +101,13 @@ class UserService
     }
     public function showParentWithChildren($id)
     {
-        $user = User::with(['children', 'children.attendances',
-                                       'children.overallPerformance',
-                                       'children.subjectPerformances.teachingAssignment.subject',
-                                       'children.subjectPerformances.teachingAssignment.classroom'])
+        $user = User::with([
+            'children',
+            'children.attendances',
+            'children.overallPerformance',
+            'children.subjectPerformances.teachingAssignment.subject',
+            'children.subjectPerformances.teachingAssignment.classroom'
+        ])
             ->findOrFail($id);
         return response()->json(
             [
@@ -155,5 +158,27 @@ class UserService
             return $this->showParentWithChildren($id);
 
         }
+    }
+    public function allTeachers()
+    {
+        $teachers = User::role('teacher')->with(['teachingAssignments.subject', 'teachingAssignments.classroom'])->get()->map(
+            function ($teacher) {
+                return [
+                    'id' => $teacher->id,
+                    'name' => $teacher->name,
+                    'teaching_assignment' => $teacher->teachingAssignments->map(
+                        function ($teachingAssignment) {
+                            return [
+                                'subject_id' => $teachingAssignment->subject->id,
+                                'subject_name' => $teachingAssignment->subject->name,
+                                'class_id' => $teachingAssignment->classroom->id,
+                                'class_name' => $teachingAssignment->classroom->name
+                            ];
+                        }
+                    )
+                ];
+            }
+        );
+        return $teachers;
     }
 }

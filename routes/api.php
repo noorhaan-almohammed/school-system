@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubjectController;
 
 Auth::routes();
 //auth api
@@ -17,6 +18,8 @@ Route::middleware('auth:sanctum')->group(function () {
         ]);
     });
     Route::get('/users', [UserController::class, 'showUserInfoBacedOnRole']);
+    Route::get('/subjects',[SubjectController::class, 'index']);
+    Route::get('/teachers',[UserController::class, 'allTeachers']);
 });
 
 

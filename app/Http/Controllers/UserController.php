@@ -93,4 +93,8 @@ class UserController extends Controller
     {
         return $this->UserService->deleteUser($id);
     }
+    public function allTeachers(){
+        $teachers = $this->UserService->allTeachers();
+        return $this->success($teachers);
+    }
 }
